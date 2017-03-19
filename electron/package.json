@@ -1,0 +1,6 @@
+{
+  "name": "vue-music-player",
+  "version": "0.0.1",
+  "main": "electron.js",
+  "autor": "Margox"
+}

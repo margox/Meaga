@@ -1,0 +1,49 @@
+@import "_inc";
+@import "_icons";
+
+::-webkit-scrollbar {
+  width: 0;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(#fff, .1);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(#fff, .3);
+  &:hover{
+    background-color: rgba(#fff, .5);
+  }
+}
+::selection{
+  background-color: rgba($color_primary, .2);
+}
+
+*{
+  box-sizing: border-box;
+}
+ul,ol,li{
+  list-style: none;
+}
+
+input,button,textarea{
+  outline: none;
+}
+
+h1,h2,h3,h4,h5,h6{
+  margin: 0;
+  padding: 0;
+}
+
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Open Source Han', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+html{
+  overflow: hidden;
+}
+body{
+  background-image: linear-gradient(to bottom right, rgba($color_primary, .3), rgba($color_primary, 0));
+}
