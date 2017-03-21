@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const jsmediatags = require('jsmediatags')
-const cacheDir = path.resolve(__dirname, './.cache/albums/')
+const cacheDir = path.resolve(__dirname, 'cache/albums/')
 
 module.exports = {
 

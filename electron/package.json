@@ -1,6 +1,15 @@
 {
-  "name": "vue-music-player",
+  "name": "electron-side",
   "version": "0.0.1",
   "main": "electron.js",
-  "autor": "Margox"
+  "autor": "Margox",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "jsmediatags": "^3.4.0"
+  }
 }
