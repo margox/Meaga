@@ -1,26 +1,87 @@
 <template>
   <div class="control-panel">
     <div class="play-controls">
-      <a href="javascript:void(0);" class="button btn-prev"><i class="icon">skip_previous</i></a>
-      <a href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
-      <a href="javascript:void(0);" class="button btn-next"><i class="icon">skip_next</i></a>
+      <a v-on:click="prev()" href="javascript:void(0);" class="button btn-prev"><i class="icon">skip_previous</i></a>
+      <a v-if="tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play"><i class="icon">pause</i></a>
+      <a v-else v-on:click="play()" href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
+      <a  v-on:click="next()" href="javascript:void(0);" class="button btn-next"><i class="icon">skip_next</i></a>
     </div>
     <div class="volume-controls">
-      <a href="javascript:void(0);" class="button btn-mute"><i class="icon">volume_up</i></a>
-      <div class="volume-bar">
-        <div class="current-volume"></div>
+      <a v-on:mousewheel="scrollVolume" v-on:click="toggleMute()" href="javascript:void(0);" class="button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
+      <div v-on:click="changeVolume" class="volume-bar">
+        <div class="current-volume" :style="{width: status.volume * 100 + '%'}"></div>
       </div>
     </div>
     <div class="mode-controls">
-      <a href="javascript:void(0);" class="button active"><i class="icon">shuffle</i></a>
-      <a href="javascript:void(0);" class="button "><i class="icon">repeat</i></a>
-      <a href="javascript:void(0);" class="button "><i class="icon">repeat_one</i></a>
+      <a v-on:click="changeLoopMode(3)" href="javascript:void(0);" class="button" :class="{active : loopMode.isShuffle}"><i class="icon">shuffle</i></a>
+      <a v-on:click="changeLoopMode(1)" href="javascript:void(0);" class="button" :class="{active : loopMode.isList}"><i class="icon">repeat</i></a>
+      <a v-on:click="changeLoopMode(2)" href="javascript:void(0);" class="button" :class="{active : loopMode.isSingle}"><i class="icon">repeat_one</i></a>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+import player from '@/player'
+
 export default {
-  name: 'control-panel'
+  name: 'control-panel',
+  methods: {
+    play () {
+      player.play()
+    },
+    pause () {
+      player.pause()
+    },
+    prev () {
+      player.prev()
+    },
+    next () {
+      player.next()
+    },
+    changeLoopMode (mode) {
+      player.loopMode(mode)
+    },
+    toggleMute () {
+      player.muted(!this.status.muted)
+    },
+    changeVolume (event) {
+      const pos = event.currentTarget.getBoundingClientRect()
+      player.volume((event.clientX - pos.left) / pos.width)
+    },
+    scrollVolume (event) {
+      let volume = player.volume() * 1000000
+      if (event.deltaY < 0) {
+        volume < 1000000 && (volume += 50000)
+      } else {
+        volume > 0 && (volume -= 50000)
+      }
+      volume > 1000000 && (volume = 1000000)
+      volume < 0 && (volume = 0)
+      player.volume(volume / 1000000)
+    }
+  },
+  computed: {
+    volumeIcon () {
+      const { muted, volume } = this.status
+      if (muted || volume === 0) {
+        return 'volume_off'
+      } else if (volume < 0.05) {
+        return 'volume_mute'
+      } else if (volume < 0.6) {
+        return 'volume_down'
+      } else {
+        return 'volume_up'
+      }
+    },
+    loopMode () {
+      return {
+        isSingle: this.status.loopMode === 2,
+        isList: this.status.loopMode === 1,
+        isShuffle: this.status.loopMode === 3
+      }
+    },
+    ...mapState(['tempStatus', 'status', 'playlist'])
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -88,13 +149,14 @@ export default {
 .volume-controls{
   position: absolute;
   top: 0;
-  right: 132px;
+  right: 142px;
   height: 30px;
   margin-top: 25px;
 }
 .btn-mute{
   width: 30px;
   height: 30px;
+  margin-right: 10px;
   color: rgba(#fff, .5);
   font-size: 20px;
   line-height: 30px;
@@ -107,7 +169,7 @@ export default {
   display: none;
   width: 80px;
   height: 6px;
-  margin: 12px 10px;
+  margin: 12px 0;
   overflow: hidden;
   background-color: rgba(#fff, .1);
   @include respond-to(sm) {
@@ -115,7 +177,6 @@ export default {
   }
 }
 .current-volume{
-  width: 30%;
   height: 6px;
   background-color: rgba(#fff, .5);
 }

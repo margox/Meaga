@@ -1,17 +1,21 @@
 <template>
   <div id="app">
     <PlayerHead />
-    <PlayerList />
+    <PlayerBody />
     <PlayerFoot />
+    <Visualizer />
   </div>
 </template>
 <script>
-import electron from 'electron'
+import player from '@/player'
 import dataStorage from '@/helpers/dataStorage'
+import fileImporter from '@/helpers/fileImporter'
 import PlayerHead from '@/components/Header'
-import PlayerList from '@/components/Content'
+import PlayerBody from '@/components/Content'
 import PlayerFoot from '@/components/Footer'
+import Visualizer from '@/components/Visualizer'
 
+const electron = window.require('electron')
 const remoteFunctions = electron.remote.require('./functions')
 
 // setting global objects
@@ -22,14 +26,21 @@ export default {
   name: 'app',
   components: {
     PlayerHead,
-    PlayerList,
-    PlayerFoot
+    PlayerBody,
+    PlayerFoot,
+    Visualizer
   },
   created () {
+
     this.$store.dispatch('sync', dataStorage.getAppData())
     this.$store.subscribe((mutation, state) => {
-      dataStorage.saveAppData(state)
+      const { status, playlist } = state
+      dataStorage.saveAppData({ status, playlist })
     })
+
+    player.initialize()
+    fileImporter.initialize()
+
   }
 }
 </script>

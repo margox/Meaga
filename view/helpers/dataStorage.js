@@ -1,25 +1,23 @@
 const localDataKey = 'vue-player-data'
 const defaultData = {
-  'status': {
-    'index': 0,
-    'volume': 0.7,
-    'list-type': 1,
-    'loop-mode': 1
+  status: {
+    index: 0,
+    volume: 0.7,
+    muted: false,
+    visualizer: null,
+    listType: 1,
+    loopMode: 1
   },
-  'playlist': []
+  playlist: []
 }
 
 export default {
 
   getAppData () {
 
-    // get data from localStorage
     let unparsedLocalData = localStorage.getItem(localDataKey)
-
-    // parse string data
     let parsedLocalData = unparsedLocalData ? JSON.parse(unparsedLocalData) : {}
 
-    // mix with default data
     return { ...defaultData, ...parsedLocalData }
 
   },
@@ -33,6 +31,7 @@ export default {
   },
 
   saveAppData (name, value) {
+
     if (arguments.length === 1) {
       localStorage.setItem(localDataKey, JSON.stringify(arguments[0]))
     } else {

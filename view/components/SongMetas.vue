@@ -1,23 +1,24 @@
 <template>
-  <div class="song-metas">
+  <div v-if="current.src" class="song-metas">
     <div class="cover">
-      <img src="/static/pic-1.png" />
+      <img :src="current.metas.cover" />
     </div>
     <div class="titles">
-      <h3>{{title}}</h3>
-      <h6>{{artist}} / {{album}}</h6>
+      <h3>{{current.name}}</h3>
+      <h6>{{current.metas.artist}} / {{current.metas.album}}</h6>
     </div>
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'song-meta',
-  data () {
-    return {
-      title: 'Controls',
-      artist: 'John Smith',
-      album: '叶惠美'
-    }
+  computed: {
+    current () {
+      return this.playlist[this.status.index] || {}
+    },
+    ...mapState(['tempStatus', 'status', 'playlist'])
   }
 }
 </script>
@@ -45,11 +46,14 @@ export default {
   }
 }
 .titles{
-  height: 30px;
+  width: 120px;
+  height: 32px;
   overflow: hidden;
   float: left;
-  margin-top: 26px;
+  margin-top: 25px;
+  text-overflow: ellipsis;
   text-transform: capitalize;
+  white-space: nowrap;
   h3{
     color: rgba(#fff, .8);
     font-size: 14px;
@@ -57,6 +61,7 @@ export default {
     line-height: 15px;
   }
   h6{
+    margin-top: 2px;
     color: rgba(#fff, .4);
     font-size: 12px;
     font-weight: lighter;

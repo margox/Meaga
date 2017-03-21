@@ -1,11 +1,12 @@
 const fs = require('fs')
 const path = require('path')
 const jsmediatags = require('jsmediatags')
-const cacheDir = path.resolve(__dirname, '../.cache/albums/')
+const cacheDir = path.resolve(__dirname, './.cache/albums/')
 
 module.exports = {
 
   readAudioTags (path) {
+
     return new Promise((resolve, reject) => {
       new jsmediatags.Reader(path)
       .setTagsToRead(['title', 'artist', 'album', 'picture'])
@@ -22,17 +23,15 @@ module.exports = {
         }
       })
     })
+
   },
 
   cacheAlbumCover (album, picture, callback) {
 
-    //console.log(album, picture)
     let cacheFilePath = path.resolve(cacheDir, album + '.' + picture.format.split('/')[1])
     // create cache file if not exists
     if (!fs.existsSync(cacheFilePath)) {
-      // encode picture data with base64
-      let fileContent = this.base64encodePicture(picture)
-      // write file
+      let fileContent = this.convertPicture(picture)
       if (fileContent) {
         fs.writeFile(cacheFilePath, fileContent, 'binary', (error) => {
           callback(cacheFilePath, error)
@@ -46,7 +45,7 @@ module.exports = {
 
   },
 
-  base64encodePicture(picture) {
+  convertPicture(picture) {
 
     if (!picture) {
       return null

@@ -1,11 +1,24 @@
 <template>
-  <div class="progress-bar">
-    <div class="progress-played"></div>
+  <div v-on:click="changeProgress" class="progress-bar">
+    <div class="progress-played" :style="{width: progress + '%'}"></div>
   </div>
 </template>
 <script>
+import player from '@/player'
+
 export default{
-  name: 'progress-bar'
+  name: 'progress-bar',
+  computed: {
+    progress () {
+      return this.$store.getters.progress * 100
+    }
+  },
+  methods: {
+    changeProgress (event) {
+      const pos = event.currentTarget.getBoundingClientRect()
+      player.progress((event.clientX - pos.left) / pos.width)
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

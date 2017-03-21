@@ -3,14 +3,10 @@
 import Vue from 'vue'
 import App from '@/App'
 import Store from '@/store'
-import fileImporter from '@/helpers/fileImporter'
 
 // Vue.config.productionTip = false
-
 const store = Store(Vue)
 window.store = store
-
-fileImporter.initializeDropEvent()
 
 /* eslint-disable no-new */
 new Vue({

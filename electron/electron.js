@@ -1,7 +1,23 @@
-var electron = require('electron');
-var app = electron.app;
-var BrowserWindow = electron.BrowserWindow;
-var mainWindow = null
+const config = require('./config')
+const electron = require('electron')
+const app = electron.app
+const BrowserWindow = electron.BrowserWindow
+
+let isQuitting = false
+let mainWindow = null
+
+const isAlreadyRunning = app.makeSingleInstance(() => {
+	if (mainWindow) {
+		if (mainWindow.isMinimized()) {
+			mainWindow.restore()
+		}
+		mainWindow.show()
+	}
+})
+
+if (isAlreadyRunning) {
+  app.quit()
+}
 
 app.on('window-all-closed', function() {
   if (process.platform != 'darwin') {
@@ -11,36 +27,16 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
 
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 580,
-    minWidth: 600,
-    minHeight: 480,
-    frame: false,
-    vibrancy: "dark",
-    icon: "../view/assets/images/app_icon.png",
-    resizable: true,
-    maximizable: false,
-    webPreferences: {
-      webSecurity: false,
-      defaultEncoding: "UTF-8"
-    }
-  })
+  mainWindow = new BrowserWindow(config.mainWindow)
+  mainWindow.loadURL(config.entry)
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
   })
-
-  if (process.env.NODE_ENV === 'production') {
-    mainWindow.loadURL('file://' + __dirname + '/../dist/index.html')
-  } else {
-    mainWindow.loadURL('http://localhost:8080/')
-  }
-
-  //mainWindow.webContents.openDevTools();
-
-  mainWindow.on('closed', function() {
-    //mainWindow = null;
+  mainWindow.on('will-navigate', (event) => {
+    event.preventDefault()
+  })
+  mainWindow.on('closed', () => {
     app.quit()
   })
 

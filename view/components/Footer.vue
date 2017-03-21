@@ -1,11 +1,12 @@
 <template>
-  <div class="footer">
+  <div v-on:dblclick="toggleVisualizer" class="footer">
     <SongMetas />
     <ProgressBar />
     <ControlPanel />
   </div>
 </template>
 <script>
+import player from '@/player'
 import SongMetas from '@/components/SongMetas'
 import ProgressBar from '@/components/ProgressBar'
 import ControlPanel from '@/components/ControlPanel'
@@ -16,6 +17,11 @@ export default {
     SongMetas,
     ProgressBar,
     ControlPanel
+  },
+  methods: {
+    toggleVisualizer () {
+      this.$store.state.status.visualize ? player.pauseVisualizer() : player.danceVisualizer()
+    }
   }
 }
 </script>
@@ -28,5 +34,6 @@ export default {
   left: 0;
   height: 80px;
   background-color: rgba(#000, .5);
+  user-select: none;
 }
 </style>

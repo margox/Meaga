@@ -1,7 +1,7 @@
 <template>
   <div class="play-list-wrap">
     <ul v-if="playlist.length" class="play-list" :class="listType">
-      <li v-for="song in playlist" :class="{current: song.isCurrent}">
+      <li v-for="(song, index) in playlist" v-on:contextmenu="handleRightClick(index)" v-on:dblclick="play(index)" :class="{current: isCurrent(index)}">
         <div class="image">
           <img :src="song.metas.cover" />
         </div>
@@ -10,7 +10,19 @@
           <h6>{{song.metas.artist}} / {{song.metas.album}}</h6>
         </div>
         <div class="operates">
-          <a href="javascript:void(0);" class="button btn-play"><i class="icon">{{song.isCurrent ? 'pause' : 'play_arrow'}}</i></a>
+          <template v-if="isCurrent(index)">
+            <a v-if="tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play">
+              <ProgressCircle :size="circleSize" :progress="progress"/>
+              <i class="icon">pause</i>
+            </a>
+            <a v-else v-on:click="play()" href="javascript:void(0);" class="button btn-play">
+              <ProgressCircle :size="circleSize" :progress="progress"/>
+              <i class="icon">play_arrow</i>
+            </a>
+          </template>
+          <template v-else>
+            <a v-on:click="play(index)" href="javascript:void(0);" class="button btn-play"><i class="icon">{{song.isCurrent ? 'pause' : 'play_arrow'}}</i></a>
+          </template>
         </div>
       </li>
     </ul>
@@ -19,19 +31,58 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import player from '@/player'
 import DragImporter from '@/components/DragImporter'
+import ProgressCircle from '@/components/ProgressCircle'
 
 export default {
   name: 'play-list',
-  methods: {},
+  methods: {
+    pause () {
+      player.pause()
+    },
+    play (index) {
+      player.play(index)
+    },
+    isCurrent (index) {
+      return index === this.status.index
+    },
+    handleRightClick (index) {
+      this.rightClickedItemIndex = index
+      this.menu.popup()
+    }
+  },
   computed: {
+    progress () {
+      return this.$store.getters.progress
+    },
+    circleSize () {
+      return this.listType === 'list' ? 'small' : 'medium'
+    },
     listType () {
       return ['list', 'grid'][this.status.listType] || 'list'
     },
-    ...mapState(['status', 'playlist'])
+    ...mapState(['tempStatus', 'status', 'playlist'])
   },
   components: {
-    DragImporter
+    DragImporter,
+    ProgressCircle
+  },
+  mounted () {
+    const { Menu, MenuItem } = window.electron.remote
+    this.menu = new Menu()
+    this.menu.append(new MenuItem({
+      label: 'Play This Item',
+      click: () => {
+        this.play(this.rightClickedItemIndex)
+      }
+    }))
+    this.menu.append(new MenuItem({
+      label: 'Remove This Item',
+      click: () => {
+        this.$store.dispatch('removeSong', this.rightClickedItemIndex)
+      }
+    }))
   }
 }
 </script>
@@ -45,6 +96,7 @@ export default {
   bottom: 0;
   left: 0;
   overflow: auto;
+  user-select: none;
 }
 
 .play-list.list{
@@ -73,10 +125,9 @@ export default {
       }
       .operates{
         .btn-play{
+          border: none;
           color: rgba($color_primary, .8);
-          &:hover{
-            border-color: rgba(#fff, .2);
-          }
+          line-height: 50px;
         }
       }
     }
@@ -117,15 +168,13 @@ export default {
     }
     .operates{
       float: right;
+      width: 48px;
       height: 48px;
       margin-top: 16px;
-      a{
-        float: left;
-        display: block;
-        text-align: center;
-      }
     }
     .btn-play{
+      position: relative;
+      display: block;
       width: 48px;
       height: 48px;
       border: 1px solid rgba(#fff, .1);
@@ -166,11 +215,9 @@ export default {
       .operates{
         opacity: 1;
         .btn-play{
-          border-color: rgba(#fff, .2);
+          border: none;
           color: rgba($color_primary, .8);
-          &:hover{
-            border-color: rgba(#fff, .6);
-          }
+          line-height: 63px;
         }
       }
     }

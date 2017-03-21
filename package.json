@@ -6,20 +6,19 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
+    "build": "rm -rf dist && node build/build.js",
     "electron-dev": "NODE_ENV=development electron ./electron/",
-    "electron-prod": "NODE_ENV=production electron ./electron/",
-    "electron-package": "",
+    "electron-prod": "NODE_ENV=development electron ./dist/",
+    "package": "npm run build && electron-packager ./dist VuelecPlayer --electron-version=1.6.2 --out=./packaged --overwrite --icon=./electron/static/images/app_icon.png",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
     "jsmediatags": "^3.4.0",
-    "vudio.js": "^1.0.1",
+    "vudio.js": "^1.0.3",
     "vue": "^2.2.2",
-    "vuex": "^2.2.1",
-    "xaudio.js": "^1.0.0"
+    "vuex": "^2.2.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
