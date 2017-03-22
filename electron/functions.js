@@ -51,7 +51,6 @@ module.exports = {
 
     let cacheFilePath = path.resolve(albumDir, album + '.' + picture.format.split('/')[1])
 
-    // create cache file if not exists
     if (!fs.existsSync(cacheFilePath)) {
       let fileContent = this.convertPicture(picture)
       if (fileContent) {

@@ -69,21 +69,21 @@ export default {
     const { Menu, MenuItem } = window.electron.remote
     this.menu = new Menu()
     this.menu.append(new MenuItem({
-      label: 'Play This Item',
+      label: '播放该曲目',
       click: () => {
         player.play(this.rightClickedItemId)
       }
     }))
     this.menu.append(new MenuItem({
-      label: 'Remove This Item',
+      label: '删除该曲目',
       click: () => {
         player.remove(this.rightClickedItemId)
       }
     }))
     this.menu.append(new MenuItem({
-      label: 'Remove All Items',
+      label: '清空播放列表',
       click: () => {
-        confirm('Are you sure to clear the playlist?') && player.clear()
+        confirm('确认清空播放列表吗？这个操作不可撤销') && player.clear()
       }
     }))
   }
@@ -143,6 +143,7 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        border-radius: 3px;
       }
     }
     .metas{
@@ -239,6 +240,8 @@ export default {
         display: block;
         width: 100%;
         height: 100%;
+        object-fit: cover;
+        border-radius: 3px;
       }
     }
     .metas{

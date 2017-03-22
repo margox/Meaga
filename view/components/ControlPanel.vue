@@ -6,17 +6,15 @@
       <a v-else v-on:click="play()" href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
       <a  v-on:click="next()" href="javascript:void(0);" class="button btn-next"><i class="icon">skip_next</i></a>
     </div>
-    <div class="volume-controls">
-      <a v-on:mousewheel="scrollVolume" v-on:click="toggleMute()" href="javascript:void(0);" class="button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
-      <div v-on:click="setVolume" class="volume-bar">
-        <div class="current-volume" :style="{width: status.volume * 100 + '%'}"></div>
+    <div v-on:mousewheel="scrollVolume" class="volume-controls">
+      <a v-on:click="toggleMute()" href="javascript:void(0);" class="button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
+      <div class="volume-bar-wrap">
+        <div v-on:click="setVolume" class="volume-bar">
+          <div class="current-volume" :style="{height: status.volume * 100 + '%'}"></div>
+        </div>
       </div>
     </div>
-    <div class="mode-controls">
-      <a v-on:click="setLoopMode(3)" href="javascript:void(0);" class="button" :class="{active : loopMode.isShuffle}"><i class="icon">shuffle</i></a>
-      <a v-on:click="setLoopMode(1)" href="javascript:void(0);" class="button" :class="{active : loopMode.isList}"><i class="icon">repeat</i></a>
-      <a v-on:click="setLoopMode(2)" href="javascript:void(0);" class="button" :class="{active : loopMode.isSingle}"><i class="icon">repeat_one</i></a>
-    </div>
+    <a v-on:click="setLoopMode()" href="javascript:void(0);" class="btn-mode"><i class="icon">{{loopMode}}</i></a>
   </div>
 </template>
 <script>
@@ -38,15 +36,16 @@ export default {
     next () {
       player.next()
     },
-    setLoopMode (mode) {
-      player.loopMode(mode)
+    setLoopMode () {
+      let { loopMode } = this.status
+      player.loopMode(loopMode < 3 ? loopMode + 1 : 1)
     },
     toggleMute () {
       player.muted(!this.status.muted)
     },
     setVolume (event) {
       const pos = event.currentTarget.getBoundingClientRect()
-      player.volume((event.clientX - pos.left) / pos.width)
+      player.volume((pos.top + pos.height - event.clientY) / pos.height)
     },
     scrollVolume (event) {
       let volume = player.volume() * 1000000
@@ -74,11 +73,7 @@ export default {
       }
     },
     loopMode () {
-      return {
-        isSingle: this.status.loopMode === 2,
-        isList: this.status.loopMode === 1,
-        isShuffle: this.status.loopMode === 3
-      }
+      return ['repeat', 'repeat_one', 'shuffle'][this.status.loopMode - 1]
     },
     ...mapState(['tempStatus', 'status', 'playlist'])
   }
@@ -95,7 +90,7 @@ export default {
   left: 0;
   width: 100%;
   height: 80px;
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 .button{
@@ -149,63 +144,72 @@ export default {
 .volume-controls{
   position: absolute;
   top: 0;
-  right: 142px;
+  right: 30px;
+  width: 30px;
   height: 30px;
   margin-top: 25px;
+  &:hover{
+    .btn-mute{
+      background-color: rgba(#000, .2);
+    }
+    .volume-bar-wrap{
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  }
 }
 .btn-mute{
   width: 30px;
   height: 30px;
-  margin-right: 10px;
   color: rgba(#fff, .5);
   font-size: 20px;
   line-height: 30px;
-  &:hover{
-    color: $color_primary;
-  }
+  border-radius: 3px;
+}
+.volume-bar-wrap{
+  position: absolute;
+  top: -105px;
+  left: 0;
+  width: 30px;
+  height: 104px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 3px;
+  border: solid 12px rgba(#000, .2);
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s;
+  transform: translateY(-10px);
 }
 .volume-bar{
-  float: left;
-  display: none;
-  width: 80px;
-  height: 6px;
-  margin: 12px 0;
-  overflow: hidden;
+  position: relative;
+  width: 30px;
+  height: 80px;
   background-color: rgba(#fff, .1);
-  @include respond-to(sm) {
-    display: block;
-  }
 }
 .current-volume{
-  height: 6px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 6px;
   background-color: rgba(#fff, .5);
 }
 
-.mode-controls{
+.btn-mode{
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 70px;
+  width: 30px;
   height: 30px;
   margin-top: 25px;
-  overflow: hidden;
   border-radius: 3px;
-  .button{
-    width: 30px;
-    height: 30px;
-    margin-right: 1px;
-    background-color: rgba(#fff, .1);
-    color: rgba(#000, .3);
-    font-size: 18px;
-    line-height: 30px;
-    &:last-child{
-      margin-right: 0;
-    }
-    &:hover{
-      color: rgba(#fff, .5);
-    }
-    &.active{
-      color: rgba(#fff, .5);
-    }
+  color: rgba(#fff, .5);
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  &:hover{
+    background-color: rgba(#000, .2);
   }
 }
 </style>

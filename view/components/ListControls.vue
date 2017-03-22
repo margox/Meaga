@@ -41,7 +41,6 @@ export default {
   border: none;
   height: 30px;
   margin-top: 10px;
-  background-color: rgba(#fff, .1);
   font-size: 24px;
   line-height: 30px;
   text-decoration: none;
@@ -56,17 +55,13 @@ export default {
     color: rgba(#fff, .5);
   }
 }
-.view-list{
-  border-radius: 3px 0 0 3px;
-}
-.view-grid{
-  border-radius: 0 3px 3px 0;
-}
 
 .btn-import-music{
+  width: 30px;
   margin: 10px 0 0 10px;
-  padding: 0 15px;
-  border-radius: 3px;
+  padding: 0;
+  background-color: rgba(#fff, .1);
+  border-radius: 50%;
   color: rgba(#fff, .5);
   font-size: 24px;
   &:hover{

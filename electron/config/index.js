@@ -4,14 +4,13 @@ module.exports = {
   mainWindow: {
     width: 800,
     height: 580,
-    minWidth: 600,
+    minWidth: 500,
     minHeight: 480,
     frame: false,
     vibrancy: "dark",
-    icon: "./static/images/app_icon.png",
+    icon: "./static/images/app_icon.icns",
     hasShadow: false,
     resizable: true,
-    // maximizable: false,
     webPreferences: {
       webSecurity: false,
       defaultEncoding: "UTF-8"
