@@ -7,14 +7,15 @@
       <a  v-on:click="next()" href="javascript:void(0);" class="button btn-next"><i class="icon">skip_next</i></a>
     </div>
     <div v-on:mousewheel="scrollVolume" class="volume-controls">
-      <a v-on:click="toggleMute()" href="javascript:void(0);" class="button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
+      <a v-on:click="toggleMute()" href="javascript:void(0);" class="small-button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
       <div class="volume-bar-wrap">
         <div v-on:click="setVolume" class="volume-bar">
           <div class="current-volume" :style="{height: status.volume * 100 + '%'}"></div>
         </div>
       </div>
     </div>
-    <a v-on:click="setLoopMode()" href="javascript:void(0);" class="btn-mode"><i class="icon">{{loopMode}}</i></a>
+    <a v-on:click="toggleVisualizer()" href="javascript:void(0);" class="small-button btn-toggle-visualizer"><i class="icon">equalizer</i></a>
+    <a v-on:click="setLoopMode()" href="javascript:void(0);" class="small-button btn-set-mode"><i class="icon">{{loopMode}}</i></a>
   </div>
 </template>
 <script>
@@ -39,6 +40,9 @@ export default {
     setLoopMode () {
       let { loopMode } = this.status
       player.loopMode(loopMode < 3 ? loopMode + 1 : 1)
+    },
+    toggleVisualizer () {
+      this.$store.state.status.visualize ? player.pauseVisualizer() : player.danceVisualizer()
     },
     toggleMute () {
       player.muted(!this.status.muted)
@@ -90,17 +94,6 @@ export default {
   left: 0;
   width: 100%;
   height: 80px;
-  // overflow: hidden;
-}
-
-.button{
-  float: left;
-  display: block;
-  padding: 0;
-  border: none;
-  text-align: center;
-  text-decoration: none;
-  transition: .3s;
 }
 
 .play-controls{
@@ -111,10 +104,16 @@ export default {
   width: 160px;
   height: 50px;
   margin: 15px auto;
-  .button{
-    border-radius: 50%;
-    font-size: 24px;
-  }
+}
+.button{
+  float: left;
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  font-size: 24px;
+  text-align: center;
+  transition: .3s;
 }
 .btn-next,
 .btn-prev{
@@ -141,10 +140,24 @@ export default {
   }
 }
 
+.small-button{
+  display: block;
+  width: 30px;
+  height: 30px;
+  color: rgba(#fff, .5);
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 3px;
+  &:hover{
+    background-color: rgba(#000, .2);
+  }
+}
+
 .volume-controls{
   position: absolute;
   top: 0;
-  right: 30px;
+  right: 20px;
   width: 30px;
   height: 30px;
   margin-top: 25px;
@@ -158,14 +171,6 @@ export default {
       transform: translateY(0);
     }
   }
-}
-.btn-mute{
-  width: 30px;
-  height: 30px;
-  color: rgba(#fff, .5);
-  font-size: 20px;
-  line-height: 30px;
-  border-radius: 3px;
 }
 .volume-bar-wrap{
   position: absolute;
@@ -195,21 +200,15 @@ export default {
   width: 6px;
   background-color: rgba(#fff, .5);
 }
-
-.btn-mode{
+.btn-set-mode,
+.btn-toggle-visualizer{
   position: absolute;
-  top: 0;
-  right: 70px;
-  width: 30px;
-  height: 30px;
-  margin-top: 25px;
-  border-radius: 3px;
-  color: rgba(#fff, .5);
-  font-size: 20px;
-  line-height: 30px;
-  text-align: center;
-  &:hover{
-    background-color: rgba(#000, .2);
-  }
+  top: 25px;
+}
+.btn-set-mode{
+  right: 55px;
+}
+.btn-toggle-visualizer{
+  right: 90px;
 }
 </style>
