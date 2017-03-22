@@ -166,6 +166,11 @@ export default {
 
   },
 
+  clear () {
+    window.store.dispatch('clear')
+    this.stop()
+  },
+
   volume (volume = -1) {
 
     const store = window.store

@@ -80,6 +80,12 @@ export default {
         player.remove(this.rightClickedItemId)
       }
     }))
+    this.menu.append(new MenuItem({
+      label: 'Remove All Items',
+      click: () => {
+        confirm('Are you sure to clear the playlist?') && player.clear()
+      }
+    }))
   }
 }
 </script>

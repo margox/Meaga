@@ -43,6 +43,9 @@ const useStore = (Vue) => {
       removeSong (state, id) {
         state.playlist = state.playlist.filter((item) => item.id !== id)
       },
+      clear (state) {
+        state.playlist = []
+      },
       setVolume (state, volume) {
         state.status = { ...state.status, volume }
       },
@@ -74,6 +77,9 @@ const useStore = (Vue) => {
       },
       removeSong ({ commit }, id) {
         commit('removeSong', id)
+      },
+      clear ({ commit }) {
+        commit('clear')
       },
       setVolume ({ commit }, volume) {
         commit('setVolume', volume)
