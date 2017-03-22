@@ -93,7 +93,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       {
         from: path.resolve(__dirname, '../electron'),
         to: config.build.assetsRoot,
-        ignore: ['.*', 'config/*']
+        ignore: ['.*', 'config/*', 'cache/**/*.jpeg', 'cache/**/*.png', 'cache/**/*.jpg', 'cache/**/*.bmp']
       },
       {
         from: path.resolve(__dirname, '../electron/config/prod.js'),

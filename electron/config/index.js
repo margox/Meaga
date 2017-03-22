@@ -7,7 +7,7 @@ module.exports = {
     minWidth: 600,
     minHeight: 480,
     frame: false,
-    vibrancy: "dark",
+    vibrancy: "ultra-dark",
     icon: "./static/images/app_icon.png",
     resizable: true,
     maximizable: false,
