@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click="changeProgress" class="progress-bar">
+  <div v-on:click="setProgress" class="progress-bar">
     <div class="progress-played" :style="{width: progress + '%'}"></div>
   </div>
 </template>
@@ -14,7 +14,7 @@ export default{
     }
   },
   methods: {
-    changeProgress (event) {
+    setProgress (event) {
       const pos = event.currentTarget.getBoundingClientRect()
       player.progress((event.clientX - pos.left) / pos.width)
     }

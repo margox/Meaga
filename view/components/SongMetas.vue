@@ -16,7 +16,7 @@ export default {
   name: 'song-meta',
   computed: {
     current () {
-      return this.playlist[this.status.index] || {}
+      return this.playlist.find(item => item.id === this.status.current) || {}
     },
     ...mapState(['tempStatus', 'status', 'playlist'])
   }
@@ -30,6 +30,7 @@ export default {
   z-index: 2;
   top: 0;
   left: 0;
+  width: 30%;
   height: 80px;
   overflow: hidden;
 }
@@ -37,7 +38,8 @@ export default {
   float: left;
   width: 40px;
   height: 40px;
-  margin: 20px 10px 0 20px;
+  margin: 20px 0 0 20px;
+  overflow: hidden;
   img{
     display: block;
     width: 100%;
@@ -46,14 +48,17 @@ export default {
   }
 }
 .titles{
-  width: 120px;
   height: 32px;
-  overflow: hidden;
-  float: left;
   margin-top: 25px;
-  text-overflow: ellipsis;
-  text-transform: capitalize;
-  white-space: nowrap;
+  margin-left: 70px;
+  overflow: hidden;
+  h3, h6{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    white-space: nowrap;
+  }
   h3{
     color: rgba(#fff, .8);
     font-size: 14px;

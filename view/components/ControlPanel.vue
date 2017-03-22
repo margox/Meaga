@@ -8,14 +8,14 @@
     </div>
     <div class="volume-controls">
       <a v-on:mousewheel="scrollVolume" v-on:click="toggleMute()" href="javascript:void(0);" class="button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
-      <div v-on:click="changeVolume" class="volume-bar">
+      <div v-on:click="setVolume" class="volume-bar">
         <div class="current-volume" :style="{width: status.volume * 100 + '%'}"></div>
       </div>
     </div>
     <div class="mode-controls">
-      <a v-on:click="changeLoopMode(3)" href="javascript:void(0);" class="button" :class="{active : loopMode.isShuffle}"><i class="icon">shuffle</i></a>
-      <a v-on:click="changeLoopMode(1)" href="javascript:void(0);" class="button" :class="{active : loopMode.isList}"><i class="icon">repeat</i></a>
-      <a v-on:click="changeLoopMode(2)" href="javascript:void(0);" class="button" :class="{active : loopMode.isSingle}"><i class="icon">repeat_one</i></a>
+      <a v-on:click="setLoopMode(3)" href="javascript:void(0);" class="button" :class="{active : loopMode.isShuffle}"><i class="icon">shuffle</i></a>
+      <a v-on:click="setLoopMode(1)" href="javascript:void(0);" class="button" :class="{active : loopMode.isList}"><i class="icon">repeat</i></a>
+      <a v-on:click="setLoopMode(2)" href="javascript:void(0);" class="button" :class="{active : loopMode.isSingle}"><i class="icon">repeat_one</i></a>
     </div>
   </div>
 </template>
@@ -38,13 +38,13 @@ export default {
     next () {
       player.next()
     },
-    changeLoopMode (mode) {
+    setLoopMode (mode) {
       player.loopMode(mode)
     },
     toggleMute () {
       player.muted(!this.status.muted)
     },
-    changeVolume (event) {
+    setVolume (event) {
       const pos = event.currentTarget.getBoundingClientRect()
       player.volume((event.clientX - pos.left) / pos.width)
     },

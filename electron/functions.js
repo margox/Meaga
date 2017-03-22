@@ -1,7 +1,28 @@
 const fs = require('fs')
+const os = require('os')
 const path = require('path')
 const jsmediatags = require('jsmediatags')
-const cacheDir = path.resolve(__dirname, 'cache/albums/')
+
+const cacheDir = path.resolve(os.homedir(), './Music/Vuelec')
+const albumDir = path.resolve(cacheDir, './albums')
+const lyricDir = path.resolve(cacheDir, './lyrics')
+const artistDir = path.resolve(cacheDir, './artists')
+
+if (!fs.existsSync(cacheDir)) {
+  fs.mkdirSync(cacheDir)
+}
+
+if (!fs.existsSync(albumDir)) {
+  fs.mkdirSync(albumDir)
+}
+
+if (!fs.existsSync(lyricDir)) {
+  fs.mkdirSync(lyricDir)
+}
+
+if (!fs.existsSync(artistDir)) {
+  fs.mkdirSync(artistDir)
+}
 
 module.exports = {
 
@@ -28,7 +49,8 @@ module.exports = {
 
   cacheAlbumCover (album, picture, callback) {
 
-    let cacheFilePath = path.resolve(cacheDir, album + '.' + picture.format.split('/')[1])
+    let cacheFilePath = path.resolve(albumDir, album + '.' + picture.format.split('/')[1])
+
     // create cache file if not exists
     if (!fs.existsSync(cacheFilePath)) {
       let fileContent = this.convertPicture(picture)

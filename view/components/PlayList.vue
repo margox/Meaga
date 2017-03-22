@@ -1,7 +1,7 @@
 <template>
   <div class="play-list-wrap">
     <ul v-if="playlist.length" class="play-list" :class="listType">
-      <li v-for="(song, index) in playlist" v-on:contextmenu="handleRightClick(index)" v-on:dblclick="play(index)" :class="{current: isCurrent(index)}">
+      <li v-for="(song, index) in playlist" v-on:contextmenu="handleRightClick(song.id)" v-on:dblclick="player.play(song.id)" :class="{current: isCurrent(song.id)}">
         <div class="image">
           <img :src="song.metas.cover" />
         </div>
@@ -10,18 +10,18 @@
           <h6>{{song.metas.artist}} / {{song.metas.album}}</h6>
         </div>
         <div class="operates">
-          <template v-if="isCurrent(index)">
-            <a v-if="tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play">
+          <template v-if="isCurrent(song.id)">
+            <a v-if="tempStatus.playing" v-on:click="player.pause()" href="javascript:void(0);" class="button btn-play">
               <ProgressCircle :size="circleSize" :progress="progress"/>
               <i class="icon">pause</i>
             </a>
-            <a v-else v-on:click="play()" href="javascript:void(0);" class="button btn-play">
+            <a v-else v-on:click="player.play()" href="javascript:void(0);" class="button btn-play">
               <ProgressCircle :size="circleSize" :progress="progress"/>
               <i class="icon">play_arrow</i>
             </a>
           </template>
           <template v-else>
-            <a v-on:click="play(index)" href="javascript:void(0);" class="button btn-play"><i class="icon">{{song.isCurrent ? 'pause' : 'play_arrow'}}</i></a>
+            <a v-on:click="player.play(song.id)" href="javascript:void(0);" class="button btn-play"><i class="icon">{{song.isCurrent ? 'pause' : 'play_arrow'}}</i></a>
           </template>
         </div>
       </li>
@@ -38,21 +38,18 @@ import ProgressCircle from '@/components/ProgressCircle'
 export default {
   name: 'play-list',
   methods: {
-    pause () {
-      player.pause()
+    isCurrent (id) {
+      return id === this.status.current
     },
-    play (index) {
-      player.play(index)
-    },
-    isCurrent (index) {
-      return index === this.status.index
-    },
-    handleRightClick (index) {
-      this.rightClickedItemIndex = index
+    handleRightClick (id) {
+      this.rightClickedItemId = id
       this.menu.popup()
     }
   },
   computed: {
+    player () {
+      return player
+    },
     progress () {
       return this.$store.getters.progress
     },
@@ -74,13 +71,13 @@ export default {
     this.menu.append(new MenuItem({
       label: 'Play This Item',
       click: () => {
-        this.play(this.rightClickedItemIndex)
+        player.play(this.rightClickedItemId)
       }
     }))
     this.menu.append(new MenuItem({
       label: 'Remove This Item',
       click: () => {
-        this.$store.dispatch('removeSong', this.rightClickedItemIndex)
+        player.remove(this.rightClickedItemId)
       }
     }))
   }
@@ -149,6 +146,12 @@ export default {
       margin: 20px 0 0 15px;
       color: #fff;
       text-transform: capitalize;
+      h3, h6{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+        white-space: nowrap;
+      }
       h3{
         height: 20px;
         overflow: hidden;
@@ -245,6 +248,12 @@ export default {
       color: #fff;
       text-align: center;
       text-transform: capitalize;
+      h3, h6{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: capitalize;
+        white-space: nowrap;
+      }
       h3{
         height: 18px;
         overflow: hidden;

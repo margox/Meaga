@@ -11,11 +11,11 @@ const useStore = (Vue) => {
         ready: false,
         playing: false,
         played: 0,
-        duration: 0,
+        duration: 1,
         importing: false
       },
       status: {
-        index: 0,
+        current: null,
         volume: 0.7,
         muted: false,
         visualize: false,
@@ -40,12 +40,10 @@ const useStore = (Vue) => {
       addSong (state, song) {
         state.playlist = [ ...state.playlist, song ]
       },
-      removeSong (state, index) {
-        let playlist = [ ...state.playlist ]
-        playlist.splice(index, 1)
-        state.playlist = playlist
+      removeSong (state, id) {
+        state.playlist = state.playlist.filter((item) => item.id !== id)
       },
-      changeVolume (state, volume) {
+      setVolume (state, volume) {
         state.status = { ...state.status, volume }
       },
       setMuted (state, muted) {
@@ -54,13 +52,13 @@ const useStore = (Vue) => {
       visualize (state, visualize) {
         state.status = { ...state.status, visualize }
       },
-      changeLoopMode (state, loopMode) {
+      setLoopMode (state, loopMode) {
         state.status = { ...state.status, loopMode }
       },
-      changeIndex (state, index) {
-        state.status = { ...state.status, index }
+      setCurrent (state, current) {
+        state.status = { ...state.status, current }
       },
-      changeListType (state, listType) {
+      setListType (state, listType) {
         state.status = { ...state.status, listType }
       }
     },
@@ -77,8 +75,8 @@ const useStore = (Vue) => {
       removeSong ({ commit }, id) {
         commit('removeSong', id)
       },
-      changeVolume ({ commit }, volume) {
-        commit('changeVolume', volume)
+      setVolume ({ commit }, volume) {
+        commit('setVolume', volume)
       },
       setMuted ({ commit }, muted) {
         commit('setMuted', muted)
@@ -86,14 +84,14 @@ const useStore = (Vue) => {
       visualize ({ commit }, visualize) {
         commit('visualize', visualize)
       },
-      changeLoopMode ({ commit }, loopMode) {
-        commit('changeLoopMode', loopMode)
+      setLoopMode ({ commit }, loopMode) {
+        commit('setLoopMode', loopMode)
       },
-      changeIndex ({ commit }, index) {
-        commit('changeIndex', index)
+      setCurrent ({ commit }, current) {
+        commit('setCurrent', current)
       },
-      changeListType ({ commit }, listType) {
-        commit('changeListType', listType)
+      setListType ({ commit }, listType) {
+        commit('setListType', listType)
       }
     }
   })
