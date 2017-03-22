@@ -1,5 +1,5 @@
 <template>
-  <svg class="progress-circle">
+  <svg class="progress-circle" :class="size">
     <circle class="circle" :cx="radius + 0.5" :cy="radius + 0.5" :r="radius" stroke-width="1"></circle>
     <circle class="played" :cx="radius + 0.5" :cy="radius + 0.5" :r="radius" stroke-width="1" :stroke-dasharray="dasharray"></circle>
   </svg>
@@ -44,6 +44,14 @@ export default {
   &:hover{
     .circle{
       stroke: rgba(#fff, .5);
+    }
+  }
+  &.small{
+    .circle{
+      stroke: rgba(#fff, .3);
+    }
+    .played{
+      stroke: #fff;
     }
   }
   .circle{

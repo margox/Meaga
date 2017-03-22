@@ -7,10 +7,11 @@ module.exports = {
     minWidth: 600,
     minHeight: 480,
     frame: false,
-    vibrancy: "ultra-dark",
+    vibrancy: "dark",
+    hasShadow: false,
     icon: "./static/images/app_icon.png",
     resizable: true,
-    maximizable: false,
+    // maximizable: false,
     webPreferences: {
       devTools: true,
       webSecurity: false,

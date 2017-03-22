@@ -32,7 +32,7 @@ export default{
   height: 8px;
   border-top: solid 7px transparent;
   &:hover{
-    background-color: rgba(#000, .5);
+    background-color: rgba(#000, .3);
     border-top-width: 0;
   }
 }

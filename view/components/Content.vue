@@ -22,6 +22,6 @@ export default {
   bottom: 80px;
   left: 0;
   padding: 30px 80px;
-  background-color: rgba(#1c1c1c, .4);
+  // background-color: rgba(#1c1c1c, .4);
 }
 </style>

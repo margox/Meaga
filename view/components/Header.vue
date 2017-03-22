@@ -26,7 +26,7 @@ export default {
   position: relative;
   z-index: 2;
   height: 50px;
-  background-color: rgba(#000, .5);
+  // background-color: rgba(#000, .5);
   // border-bottom: 1px solid rgba(#000, .5);
 }
 .top-bar{

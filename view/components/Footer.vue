@@ -33,7 +33,7 @@ export default {
   bottom: 0;
   left: 0;
   height: 80px;
-  background-color: rgba(#000, .5);
+  background-color: rgba(#000, .2);
   user-select: none;
 }
 </style>

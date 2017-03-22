@@ -147,7 +147,8 @@ export default {
     const player = window.player
     const store = window.store
 
-    player.pause()
+    this.pause()
+    this.pauseVisualizer()
     player.src = ''
     store.dispatch('setCurrent', -1)
 

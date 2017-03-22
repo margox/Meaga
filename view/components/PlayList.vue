@@ -111,17 +111,16 @@ export default {
     height: 80px;
     padding: 0 20px;
     background-clip: padding-box;
-    border-bottom: 1px solid rgba(#fff, .05);
-    &:hover{
+    transition: background linear .3s;
+    &:nth-child(odd){
       background-color: rgba(#fff, .05);
     }
-    &:last-child{
-      border-bottom: none;
+    &:hover{
+      background-color: rgba(#fff, .2);
     }
     &.current{
-      background-color: rgba(#000, .1);
+      background-color: rgba($color_primary, .8);
       .metas{
-        color: $color_primary;
         h6{
           opacity: 1;
         }
@@ -129,7 +128,7 @@ export default {
       .operates{
         .btn-play{
           border: none;
-          color: rgba($color_primary, .8);
+          color: #fff;
           line-height: 50px;
         }
       }
@@ -152,6 +151,7 @@ export default {
       margin: 20px 0 0 15px;
       color: #fff;
       text-transform: capitalize;
+      cursor: default;
       h3, h6{
         overflow: hidden;
         text-overflow: ellipsis;

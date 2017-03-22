@@ -2,9 +2,15 @@
   <div
     class="drag-importer"
     :class="classNames"
-    v-on:click="importMusic"
   >
-    <span><i class="empty-icon icon">inbox</i><br/>No Items in your playlist<br/>Drag audio(.mp3) files here to import them</span>
+    <div class="drag-tip">
+      <span>
+        <i class="empty-icon icon">inbox</i><br/>
+        No Items in your playlist<br/>
+        Drag audio(.mp3) files into this window to import them
+      </span>
+      <a v-on:click="importMusic()" class="btn-import" href="javascript:void(0);">click to import</a>
+    </div>
   </div>
 </template>
 <script>
@@ -33,7 +39,7 @@ export default {
   }
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~scssinc";
 
 .drag-importer{
@@ -43,37 +49,46 @@ export default {
   bottom: 20px;
   left: 20px;
   visibility: hidden;
-  border: dashed 2px currentColor;
   opacity: 0;
   color: rgba(#fff, .3);
   user-select: none;
-  cursor: pointer;
   &.active{
     visibility: visible;
     opacity: 1;
   }
-  &.focus{
-    color: rgba($color_primary, .5);
-  }
-  &:hover{
-    color: rgba(#fff, .5);
-  }
-  span{
-    position: absolute;
-    top: 50%;
-    right: 0;
-    left: 0;
-    pointer-events: none;
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 32px;
-    text-align: center;
-    text-transform: uppercase;
-    transform: translate(0%, -50%);
-  }
+}
+.drag-tip{
+  position: absolute;
+  top: 45%;
+  right: 0;
+  left: 0;
+  font-size: 18px;
+  font-weight: lighter;
+  line-height: 32px;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translate(0%, -50%);
 }
 .empty-icon{
   font-size: 64px;
   line-height: 80px;
+}
+.btn-import{
+  display: block;
+  width: 180px;
+  height: 50px;
+  margin: 30px auto 0 auto;
+  background-color: $color_primary;
+  border-radius: 3px;
+  color: rgba(#fff, 1);
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: .3s;
+  &:hover{
+    background-color: $color_primary - 30;
+  }
 }
 </style>
