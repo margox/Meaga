@@ -102,10 +102,15 @@ export default {
   user-select: none;
 }
 
-.play-list.list{
+.play-list{
   display: block;
+  height: 100%;
   margin: 0;
   padding: 0;
+  overflow: auto;
+}
+
+.play-list.list{
   li{
     display: block;
     height: 80px;
@@ -204,9 +209,6 @@ export default {
 .play-list.grid{
   max-width: 800px;
   margin: 0 auto;
-  padding: 0;
-  // padding: 5px;
-  overflow: hidden;
   li{
     position: relative;
     float: left;
@@ -214,9 +216,7 @@ export default {
     width: 25%;
     height: auto;
     padding-bottom: 25%;
-    // border: 5px solid transparent;
     &.current{
-      // background-color: rgba(#000, .1);
       .metas{
         color: $color_primary;
         h6{

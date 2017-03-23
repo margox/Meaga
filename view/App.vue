@@ -48,5 +48,12 @@ export default {
 @import '~scssbase';
 #app {
   height: 100%;
+  opacity: 0;
+  transition: transform .4s, opacity .4s;
+  transform: translateY(10px);
+  &.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>

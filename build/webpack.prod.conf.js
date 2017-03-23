@@ -95,6 +95,11 @@ var webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*', 'config/*']
       },
       {
+        from: path.resolve(__dirname, '../electron/config'),
+        to: path.resolve(config.build.assetsRoot, './config'),
+        ignore: ['index.js', 'prod.js']
+      },
+      {
         from: path.resolve(__dirname, '../electron/config/prod.js'),
         to: path.resolve(config.build.assetsRoot, './config/index.js')
       }

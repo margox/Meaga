@@ -23,7 +23,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.common.js',
       '@': path.resolve(__dirname, '../view'),
-      'assets': path.resolve(__dirname, '../view/assets'),
+      // 'assets': path.resolve(__dirname, '../view/assets'),
       'scssinc': path.resolve(__dirname, '../view/assets/scss/_inc.scss'),
       'scssbase': path.resolve(__dirname, '../view/assets/scss/_base.scss')
     }
@@ -59,11 +59,18 @@ module.exports = {
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        query: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
+        loaders: [
+          {
+            loader: path.resolve(__dirname, 'cssPathResolver')
+          },
+          {
+            loader: 'url-loader',
+            query: {
+              limit: 10000,
+              name: utils.assetsPath('icons/[name].[hash:7].[ext]'),
+            }
+          }
+        ]
       }
     ]
   },
