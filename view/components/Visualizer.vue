@@ -1,6 +1,6 @@
 <template>
   <div class="visualizer" :class="{hide: hide}">
-    <canvas width="1024" height="160" ref="canvas"></canvas>
+    <canvas width="1024" height="100" ref="canvas"></canvas>
   </div>
 </template>
 <script>
@@ -26,7 +26,7 @@ export default {
   left: 50%;
   z-index: 1;
   width: 1024px;
-  height: 160px;
+  height: 100px;
   pointer-events: none;
   transform: translateX(-50%);
   &.hide{
@@ -37,7 +37,7 @@ export default {
     top: 0;
     left: 0;
     width: 1024px;
-    height: 160px;
+    height: 100px;
     background-color: transparent;
   }
 }

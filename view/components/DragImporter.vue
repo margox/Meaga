@@ -6,8 +6,8 @@
     <div class="drag-tip">
       <span>
         <i class="empty-icon icon">inbox</i><br/>
-        No Items in your playlist<br/>
-        Drag audio(.mp3) files into this window to import them
+        Nothing in your playlist<br/>
+        Drag mp3 files into this window to import them
       </span>
       <a v-on:click="importMusic()" class="btn-import" href="javascript:void(0);">click to import</a>
     </div>
@@ -62,7 +62,7 @@ export default {
   top: 45%;
   right: 0;
   left: 0;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: lighter;
   line-height: 32px;
   text-align: center;
@@ -82,7 +82,7 @@ export default {
   border-radius: 3px;
   color: rgba(#fff, 1);
   font-size: 14px;
-  font-weight: bold;
+  font-weight: lighter;
   line-height: 50px;
   text-align: center;
   text-transform: uppercase;

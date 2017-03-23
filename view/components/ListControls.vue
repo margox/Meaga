@@ -49,7 +49,7 @@ export default {
 .btn-switch-list-type{
   width: 30px;
   margin-right: 1px;
-  color: rgba(#000, .3);
+  color: rgba(#fff, .1);
   &.active,
   &:hover{
     color: rgba(#fff, .5);

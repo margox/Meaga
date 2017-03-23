@@ -11,9 +11,9 @@ export default {
     const visualizer = new Vudio(audio, canvas, {
       accuracy: 512,
       width: 1024,
-      height: 160,
+      height: 100,
       waveform: {
-        maxHeight: 160,
+        maxHeight: 100,
         minHeight: 0,
         spacing: 1,
         color: 'rgba(255,255,255,.3)',
