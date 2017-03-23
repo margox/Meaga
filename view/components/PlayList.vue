@@ -204,7 +204,8 @@ export default {
 .play-list.grid{
   max-width: 800px;
   margin: 0 auto;
-  padding: 5px;
+  padding: 0;
+  // padding: 5px;
   overflow: hidden;
   li{
     position: relative;
@@ -213,9 +214,9 @@ export default {
     width: 25%;
     height: auto;
     padding-bottom: 25%;
-    border: 5px solid transparent;
+    // border: 5px solid transparent;
     &.current{
-      background-color: rgba(#000, .1);
+      // background-color: rgba(#000, .1);
       .metas{
         color: $color_primary;
         h6{
@@ -241,7 +242,7 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 3px;
+        // border-radius: 3px;
       }
     }
     .metas{
@@ -291,9 +292,6 @@ export default {
       opacity: 0;
       &:hover{
         opacity: 1;
-        .btn-play{
-          opacity: 1;
-        }
       }
       .btn-play{
         display: block;

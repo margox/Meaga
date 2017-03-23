@@ -14,7 +14,7 @@
         </div>
       </div>
     </div>
-    <a v-on:click="toggleVisualizer()" href="javascript:void(0);" class="small-button btn-toggle-visualizer"><i class="icon">equalizer</i></a>
+    <a v-on:click="toggleVisualizer()" href="javascript:void(0);" :class="{off: !$store.state.status.visualize}" class="small-button btn-toggle-visualizer"><i class="icon">equalizer</i></a>
     <a v-on:click="setLoopMode()" href="javascript:void(0);" class="small-button btn-set-mode"><i class="icon">{{loopMode}}</i></a>
   </div>
 </template>
@@ -148,7 +148,6 @@ export default {
   font-size: 20px;
   line-height: 30px;
   text-align: center;
-  border-radius: 3px;
   &:hover{
     background-color: rgba(#000, .2);
   }
@@ -174,13 +173,12 @@ export default {
 }
 .volume-bar-wrap{
   position: absolute;
-  top: -105px;
+  top: -103px;
   left: 0;
   width: 30px;
   height: 104px;
   margin: 0;
   overflow: hidden;
-  border-radius: 3px;
   border: solid 12px rgba(#000, .2);
   opacity: 0;
   pointer-events: none;
@@ -210,5 +208,8 @@ export default {
 }
 .btn-toggle-visualizer{
   right: 90px;
+  &.off{
+    color: rgba(#fff, .15);
+  }
 }
 </style>
