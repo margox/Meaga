@@ -6,6 +6,7 @@
 </template>
 <script>
 const sizeRadius = {
+  'tiny': 14,
   'small': 23,
   'medium': 29,
   'large': 99
@@ -46,6 +47,7 @@ export default {
       stroke: rgba(#fff, .5);
     }
   }
+  &.tiny,
   &.small{
     .circle{
       stroke: rgba(#fff, .3);

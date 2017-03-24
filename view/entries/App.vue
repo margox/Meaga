@@ -8,19 +8,13 @@
 </template>
 <script>
 import player from '@/player'
+import connecter from '@/helpers/connecter'
 import dataStorage from '@/helpers/dataStorage'
 import fileImporter from '@/helpers/fileImporter'
 import PlayerHead from '@/components/Header'
 import PlayerBody from '@/components/Content'
 import PlayerFoot from '@/components/Footer'
 import Visualizer from '@/components/Visualizer'
-
-const electron = window.require('electron')
-const remoteFunctions = electron.remote.require('./functions')
-
-// setting global objects
-window.electron = electron
-window.remoteFunctions = remoteFunctions
 
 export default {
   name: 'app',
@@ -34,18 +28,29 @@ export default {
 
     this.$store.dispatch('sync', dataStorage.getAppData())
     this.$store.subscribe((mutation, state) => {
+
       const { status, playlist } = state
       dataStorage.saveAppData({ status, playlist })
+
+      if (window.platform === 'darwin') {
+        connecter.syncAppState(state)
+      }
+
     })
 
     player.initialize()
     fileImporter.initialize()
+
+    if (window.platform === 'darwin') {
+      connecter.initialize()
+    }
 
   }
 }
 </script>
 <style lang="scss">
 @import '~scssbase';
+
 #app {
   height: 100%;
   opacity: 0;

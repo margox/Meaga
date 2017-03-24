@@ -21,7 +21,7 @@
             </a>
           </template>
           <template v-else>
-            <a v-on:click="player.play(song.id)" href="javascript:void(0);" class="button btn-play"><i class="icon">{{song.isCurrent ? 'pause' : 'play_arrow'}}</i></a>
+            <a v-on:click="player.play(song.id)" href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
           </template>
         </div>
       </li>

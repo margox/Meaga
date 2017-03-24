@@ -26,6 +26,10 @@ if (!fs.existsSync(artistDir)) {
 
 module.exports = {
 
+  getProcess () {
+    return process
+  },
+
   readAudioTags (path) {
 
     return new Promise((resolve, reject) => {

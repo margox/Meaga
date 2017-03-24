@@ -9,11 +9,13 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './view/main.js'
+    app: './view/main.js',
+    tray: './view/tray.js'
   },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
+    chunkFilename: "[id].chunk.js",
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath

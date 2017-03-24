@@ -10,6 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "electron-config": "^0.2.1",
     "jsmediatags": "^3.4.0"
   }
 }
