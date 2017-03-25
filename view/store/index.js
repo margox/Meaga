@@ -15,7 +15,7 @@ const useStore = (Vue) => {
         importing: false
       },
       status: {
-        current: null,
+        current: -1,
         volume: 0.7,
         muted: false,
         visualize: false,

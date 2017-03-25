@@ -8,6 +8,7 @@
 </template>
 <script>
 import player from '@/player'
+import appMenu from '@/helpers/appMenu'
 import connecter from '@/helpers/connecter'
 import dataStorage from '@/helpers/dataStorage'
 import fileImporter from '@/helpers/fileImporter'
@@ -42,6 +43,7 @@ export default {
     fileImporter.initialize()
 
     if (window.platform === 'darwin') {
+      appMenu.initialize()
       connecter.initialize()
     }
 

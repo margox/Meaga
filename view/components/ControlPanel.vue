@@ -149,7 +149,7 @@ export default {
   line-height: 30px;
   text-align: center;
   &:hover{
-    background-color: rgba(#000, .2);
+    background-color: rgba(#fff, .1);
   }
 }
 
@@ -162,7 +162,7 @@ export default {
   margin-top: 25px;
   &:hover{
     .btn-mute{
-      background-color: rgba(#000, .2);
+      background-color: rgba(#fff, .1);
     }
     .volume-bar-wrap{
       opacity: 1;
@@ -173,13 +173,13 @@ export default {
 }
 .volume-bar-wrap{
   position: absolute;
-  top: -103px;
+  top: -104px;
   left: 0;
   width: 30px;
   height: 104px;
   margin: 0;
   overflow: hidden;
-  border: solid 12px rgba(#000, .2);
+  border: solid 12px rgba(#fff, .1);
   opacity: 0;
   pointer-events: none;
   transition: .3s;
@@ -189,7 +189,7 @@ export default {
   position: relative;
   width: 30px;
   height: 80px;
-  background-color: rgba(#fff, .1);
+  background-color: rgba(#000, .1);
 }
 .current-volume{
   position: absolute;

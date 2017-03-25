@@ -1,12 +1,19 @@
 {
-  "name": "electron-side",
+  "name": "LightBoat",
   "version": "0.0.1",
   "main": "electron.js",
-  "autor": "Margox",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/margox/VueElectronPlayer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/margox/VueElectronPlayer/issues"
+  },
+  "homepage": "https://github.com/margox/VueElectronPlayer#readme",
+  "author": "Margox",
   "license": "ISC",
   "description": "",
   "dependencies": {

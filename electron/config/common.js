@@ -1,5 +1,6 @@
 const path = require('path')
 const profile = require('./profile')
+const packageInfo = require(path.resolve(__dirname, '../package.json'))
 const mainWindowState = profile.get('mainWindowState')
 
 let mainWindow = {
@@ -22,7 +23,7 @@ let mainWindow = {
 
 let trayWindow = {
   width: 240,
-  height: 330,
+  height: 310,
   y: -10,
   frame: false,
   vibrancy: 'dark',
@@ -49,4 +50,4 @@ let communication = {
 
 let trayIcon = path.resolve(__dirname, '../static/images/tray_icon.png')
 
-module.exports = { communication, profile, mainWindow, trayWindow, trayIcon }
+module.exports = { communication, profile, mainWindow, trayWindow, trayIcon, packageInfo }

@@ -156,7 +156,7 @@ html, body{
 }
 
 .playlist{
-  height: 320px;
+  height: 300px;
   margin: 0;
   padding: 0;
   overflow: auto;
