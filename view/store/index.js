@@ -12,7 +12,8 @@ const useStore = (Vue) => {
         playing: false,
         played: 0,
         duration: 1,
-        importing: false
+        importing: false,
+        isFullScreen: false
       },
       status: {
         current: -1,

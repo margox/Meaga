@@ -18,6 +18,16 @@ export default {
         case 'prev':
           player.prev()
           break
+        case 'enter-full-screen':
+          window.store.dispatch('setTempStatus', {
+            isFullScreen: true
+          })
+          break
+        case 'leave-full-screen':
+          window.store.dispatch('setTempStatus', {
+            isFullScreen: false
+          })
+          break
       }
     })
 

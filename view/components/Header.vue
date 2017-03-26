@@ -45,5 +45,6 @@ export default {
   line-height: 50px;
   text-transform: uppercase;
   cursor: default;
+  user-select: none;
 }
 </style>

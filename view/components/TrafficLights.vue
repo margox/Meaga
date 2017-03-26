@@ -1,20 +1,33 @@
 <template>
-  <div class="controls">
+  <div v-if="show" class="controls">
     <button v-on:click="handleClose" class="btn-close"></button>
     <button v-on:click="handleMinimize" class="btn-minimize"></button>
-    <button class="btn-maxmize"></button>
+    <button v-on:click="handleFullScreen(true)" class="btn-maxmize"></button>
+  </div>
+  <div v-else class="controls">
+    <button class="btn-void"></button>
+    <button class="btn-void"></button>
+    <button v-on:click="handleFullScreen(false)" class="btn-maxmize"></button>
   </div>
 </template>
 <script>
 
 export default {
   name: 'traffic-lights',
+  computed: {
+    show () {
+      return !this.$store.state.tempStatus.isFullScreen
+    }
+  },
   methods: {
     handleClose () {
       window.electron.remote.getCurrentWindow().close()
     },
     handleMinimize () {
       window.electron.remote.getCurrentWindow().minimize()
+    },
+    handleFullScreen (flag) {
+      window.electron.remote.getCurrentWindow().setFullScreen(flag)
     }
   }
 }
@@ -50,8 +63,11 @@ export default {
   .btn-maxmize{
     background-color: #7ed321;
     &:hover{
-      background-color: #ccc;
+      background-color: #7ed321 - 20;
     }
+  }
+  .btn-void{
+    background-color: #888;
   }
 }
 </style>

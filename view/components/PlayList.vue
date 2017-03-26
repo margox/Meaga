@@ -207,8 +207,6 @@ export default {
 }
 
 .play-list.grid{
-  max-width: 800px;
-  margin: 0 auto;
   li{
     position: relative;
     float: left;

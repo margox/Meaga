@@ -102,6 +102,9 @@ export default {
             label: '最小化窗口',
             role: 'minimize'
           }, {
+            label: '还原窗口',
+            role: 'resetzoom'
+          }, {
             label: '关闭窗口',
             role: 'close'
           }

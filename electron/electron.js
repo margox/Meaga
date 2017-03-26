@@ -46,6 +46,18 @@ app.on('ready', () => {
     event.preventDefault()
   })
 
+	mainWindow.on('enter-full-screen', (event) => {
+		mainWindow.webContents.send(config.communication.mainChannel, {
+			action: 'enter-full-screen'
+		})
+	})
+
+	mainWindow.on('leave-full-screen', (event) => {
+		mainWindow.webContents.send(config.communication.mainChannel, {
+			action: 'leave-full-screen'
+		})
+	})
+
   mainWindow.on('close', (event) => {
 
 		if (!isQuitting) {
