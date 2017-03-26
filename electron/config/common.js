@@ -13,7 +13,7 @@ let mainWindow = {
   frame: false,
   vibrancy: 'dark',
   icon: path.resolve(__dirname, '../static/images/app_icon.icns'),
-  hasShadow: false,
+  // hasShadow: false,
   resizable: true,
   webPreferences: {
     webSecurity: false,

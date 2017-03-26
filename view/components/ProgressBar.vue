@@ -39,6 +39,7 @@ export default{
 .progress-played{
   width: 0%;
   height: 100%;
-  background-color: rgba($color_primary, .6);
+  background-image: linear-gradient(to right, $color_primary_light, $color_primary);
+  background-size: 100vw 8px;
 }
 </style>

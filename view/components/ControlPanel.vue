@@ -132,7 +132,7 @@ export default {
   width: 50px;
   height: 50px;
   margin: 0 15px;
-  background-color: $color_primary;
+  background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
   color: rgba(#fff, 1);
   line-height: 50px;
   &:hover{

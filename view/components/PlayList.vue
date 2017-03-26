@@ -99,6 +99,7 @@ export default {
   bottom: 0;
   left: 0;
   overflow: auto;
+  background-color: rgba(#000, .15);
   user-select: none;
 }
 
@@ -116,18 +117,20 @@ export default {
     height: 80px;
     padding: 0 20px;
     background-clip: padding-box;
+    border-bottom: 1px solid rgba(#fff, .05);
     transition: background linear .3s;
-    &:nth-child(odd){
+    // &:nth-child(odd){
+    //   background-color: rgba(#fff, .05);
+    // }
+    &:hover{
       background-color: rgba(#fff, .05);
     }
-    &:hover{
-      background-color: rgba(#fff, .2);
-    }
     &.current{
-      background-color: rgba($color_primary, .8);
       .metas{
-        h6{
-          opacity: 1;
+        h3{
+          background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
         }
       }
       .operates{
@@ -135,6 +138,11 @@ export default {
           border: none;
           color: #fff;
           line-height: 50px;
+          i{
+            background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+          }
         }
       }
     }
@@ -167,7 +175,6 @@ export default {
       h3{
         height: 20px;
         overflow: hidden;
-        opacity: .8;
         font-size: 14px;
         font-weight: bold;
         line-height: 20px;

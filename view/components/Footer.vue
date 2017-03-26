@@ -27,7 +27,9 @@ export default {
   bottom: 0;
   left: 0;
   height: 80px;
-  background-color: rgba(#000, .2);
+  background-color: rgba(#000, .45);
+  border-top: 1px solid rgba(#000, .05);
+  box-shadow: 0 -2px 4px rgba(#000, .1);
   user-select: none;
 }
 </style>

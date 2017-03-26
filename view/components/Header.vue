@@ -31,6 +31,9 @@ export default {
   position: relative;
   z-index: 2;
   height: 50px;
+  background-color: rgba(#000, .45);
+  border-bottom: 1px solid rgba(#000, .05);
+  box-shadow: 0 2px 4px rgba(#000, .1);
 }
 .top-bar{
   height: 50px;
@@ -38,9 +41,9 @@ export default {
   -webkit-app-region: drag;
 }
 .app-caption{
-  color: rgba(#fff, .6);
+  color: rgba(#fff, .8);
   font-size: 14px;
-  font-weight: lighter;
+  font-weight: bold;
   letter-spacing: 1px;
   line-height: 50px;
   text-transform: uppercase;
