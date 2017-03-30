@@ -111,32 +111,32 @@ export default {
   padding: 0;
   border: none;
   border-radius: 50%;
+  background-color: rgba(#fff, .1);
+  color: rgba(#fff, .5);
   font-size: 24px;
   text-align: center;
   transition: .3s;
+  &:hover{
+    background-color: rgba(#fff, .2);
+    color: #fff;
+  }
 }
 .btn-next,
 .btn-prev{
   width: 40px;
   height: 40px;
   margin: 5px 0;
-  background-color: rgba(#fff, .1);
-  color: rgba(#fff, .5);
   line-height: 40px;
-  &:hover{
-    background-color: rgba(#fff, .2);
-    color: #fff;
-  }
 }
 .btn-play{
   width: 50px;
   height: 50px;
   margin: 0 15px;
   background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
-  color: rgba(#fff, 1);
+  color: #fff;
   line-height: 50px;
   &:hover{
-    background-color: $color_primary - 40;
+    background-image: linear-gradient(to bottom, $color_primary_light, $color_primary);
   }
 }
 

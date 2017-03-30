@@ -57,7 +57,7 @@ export default {
       return this.listType === 'list' ? 'small' : 'medium'
     },
     listType () {
-      return ['list', 'grid'][this.status.listType] || 'list'
+      return 'list' // ['list', 'grid'][this.status.listType] || 'list'
     },
     ...mapState(['tempStatus', 'status', 'playlist'])
   },
@@ -126,11 +126,11 @@ export default {
       background-color: rgba(#fff, .05);
     }
     &.current{
+      background-color: $color_primary;
+      background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
       .metas{
-        h3{
-          background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
+        h6{
+          color: #fff;
         }
       }
       .operates{
@@ -138,11 +138,6 @@ export default {
           border: none;
           color: #fff;
           line-height: 50px;
-          i{
-            background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-          }
         }
       }
     }
@@ -163,7 +158,6 @@ export default {
       float: left;
       max-width: 300px;
       margin: 20px 0 0 15px;
-      color: #fff;
       text-transform: capitalize;
       cursor: default;
       h3, h6{
@@ -175,14 +169,15 @@ export default {
       h3{
         height: 20px;
         overflow: hidden;
+        color: #fff;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: normal;
         line-height: 20px;
       }
       h6{
         height: 20px;
         overflow: hidden;
-        opacity: .4;
+        color: rgba(#fff, .5);
         font-size: 12px;
         font-weight: lighter;
         line-height: 20px;

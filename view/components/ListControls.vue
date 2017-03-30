@@ -1,7 +1,7 @@
 <template>
   <div class="list-controls">
-    <a href="javascript:void(0);" v-on:click="setListType(0)" :class="[listType ? '' : 'active']" class="button btn-switch-list-type view-list"><i class="icon">view_stream</i></a>
-    <a href="javascript:void(0);" v-on:click="setListType(1)" :class="[listType ? 'active' : '']" class="button btn-switch-list-type view-grid"><i class="icon">view_module</i></a>
+    <!-- <a href="javascript:void(0);" v-on:click="setListType(0)" :class="[listType ? '' : 'active']" class="button btn-switch-list-type view-list"><i class="icon">view_stream</i></a> -->
+    <!-- <a href="javascript:void(0);" v-on:click="setListType(1)" :class="[listType ? 'active' : '']" class="button btn-switch-list-type view-grid"><i class="icon">view_module</i></a> -->
     <a href="javascript:void(0);" v-on:click="importMusic" class="button btn-import-music"><i class="icon">add</i></a>
   </div>
 </template>
