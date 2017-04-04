@@ -43,59 +43,73 @@ export default {
 
   },
 
-  importLocalFiles (data) {
+  importLocalFiles (files) {
 
-    if (!data || !(data instanceof Array)) {
+    if (!files || !(files instanceof Array)) {
       return false
     }
 
-    let playlist = window.store.state.playlist
-    let selectSongs = data.map((item, index) => {
+    let { state } = window.store
+    let { songs } = state
+    let { type, value } = state.status.currentMenu
+    let selectedSongs = files.map((item, index) => {
       let id = new Date().getTime() + '_' + index + '_' + Math.ceil(1000 + 9999 * Math.random())
       return {
         id: id,
         src: item
       }
     }).filter((item) => {
-      return playlist.findIndex((subItem) => subItem.src === 'file://' + item.src) === -1
+      return songs.findIndex((subItem) => subItem.src === 'file://' + item.src) === -1
     })
 
-    this.syncSongsMetas(selectSongs, 0)
+    this.syncSongsMetas(selectedSongs, 0, {
+      playlistType: type,
+      playlistId: value
+    })
 
   },
 
-  syncSongsMetas (songs, index = 0) {
+  syncSongsMetas (songs, index = 0, { playlistType, playlistId }) {
+
+    const { store } = window
+    const favorite = playlistType === 'playlist' && playlistId === 3
 
     if (index < songs.length) {
 
       window.remoteFunctions.readAudioTags(songs[index].src).then((tags) => {
 
-        this.syncSongsMetas(songs, index + 1)
-
-        window.store.dispatch('addSong', {
-          id: songs[index].id,
-          name: tags.title,
-          src: 'file://' + songs[index].src,
-          metas: {
-            artist: tags.artist,
-            album: tags.album,
-            cover: 'file://' + tags.cover
-          }
+        this.syncSongsMetas(songs, index + 1, { playlistType, playlistId })
+        store.dispatch('addSong', {
+          song: {
+            id: songs[index].id,
+            name: tags.title,
+            src: 'file://' + songs[index].src,
+            favorite: favorite,
+            metas: {
+              artist: tags.artist,
+              album: tags.album,
+              cover: 'file://' + tags.cover
+            }
+          },
+          playlistId: playlistId
         })
 
-      }).catch(() => {
+      }).catch((tags, error) => {
 
-        this.syncSongsMetas(songs, index + 1)
-
-        window.store.dispatch('addSong', {
-          id: songs[index].id,
-          name: null,
-          src: 'file://' + songs[index].src,
-          metas: {
-            artist: null,
-            album: null,
-            cover: null
-          }
+        this.syncSongsMetas(songs, index + 1, { playlistType, playlistId })
+        store.dispatch('addSong', {
+          song: {
+            id: songs[index].id,
+            name: tags.title,
+            src: 'file://' + songs[index].src,
+            favorite: favorite,
+            metas: {
+              artist: null,
+              album: null,
+              cover: null
+            }
+          },
+          playlistId: playlistId
         })
 
       })

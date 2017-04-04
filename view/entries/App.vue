@@ -29,20 +29,14 @@ export default {
 
     this.$store.dispatch('sync', dataStorage.getAppData())
     this.$store.subscribe((mutation, state) => {
-
-      const { status, playlist } = state
-      dataStorage.saveAppData({ status, playlist })
-
-      if (window.platform === 'darwin') {
-        connecter.syncAppState(state)
-      }
-
+      dataStorage.saveAppData(state)
+      window.platform === '_darwin' && connecter.syncAppState(state)
     })
 
     player.initialize()
     fileImporter.initialize()
 
-    if (window.platform === 'darwin') {
+    if (window.platform === '_darwin') {
       appMenu.initialize()
       connecter.initialize()
     }

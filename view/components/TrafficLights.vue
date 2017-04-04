@@ -37,13 +37,13 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  height: 50px;
+  height: 60px;
   padding-left: 20px;
   button{
     float: left;
     width: 12px;
     height: 12px;
-    margin: 19px 12px 0 0;
+    margin: 24px 12px 0 0;
     padding: 0;
     border: none;
     border-radius: 50%;

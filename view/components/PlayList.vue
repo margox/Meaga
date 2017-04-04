@@ -1,67 +1,102 @@
 <template>
   <div class="play-list-wrap">
-    <ul v-if="playlist.length" class="play-list" :class="listType">
-      <li v-for="(song, index) in playlist" v-on:contextmenu="handleRightClick(song.id)" v-on:dblclick="player.play(song.id)" :class="{current: isCurrent(song.id)}">
-        <div class="image">
-          <img :src="song.metas.cover" />
-        </div>
-        <div class="metas">
-          <h3>{{song.name}}</h3>
-          <h6>{{song.metas.artist}} / {{song.metas.album}}</h6>
-        </div>
-        <div class="operates">
-          <template v-if="isCurrent(song.id)">
-            <a v-if="tempStatus.playing" v-on:click="player.pause()" href="javascript:void(0);" class="button btn-play">
-              <ProgressCircle :size="circleSize" :progress="progress"/>
-              <i class="icon">pause</i>
+    <template v-if="menuIs('playlist') || menuIs('artist') || menuIs('album')">
+      <ul v-if="list.items.length" class="play-list">
+        <li v-for="(song, index) in list.items" v-on:contextmenu="handleRightClick(song.id)" v-on:dblclick="play(song.id)" :class="{current: isCurrent('song', song.id)}">
+          <div class="metas">
+            <span v-if="isCurrent('song', song.id)" class="bagde"><PlayingBadge /></span>
+            <span v-else class="index">{{index + 1}}</span>
+            <span class="name">{{song.name}}</span>
+            <span class="artist">{{song.metas.artist}}</span>
+            <span class="album">{{song.metas.album}}</span>
+          </div>
+          <div class="operates">
+            <a href="javascript:void(0);" v-on:click="toggleFavorite(song.id, !song.favorite)">
+              <i v-if="song.favorite" class="icon active">favorite</i>
+              <i v-else class="icon">favorite_border</i>
             </a>
-            <a v-else v-on:click="player.play()" href="javascript:void(0);" class="button btn-play">
-              <ProgressCircle :size="circleSize" :progress="progress"/>
-              <i class="icon">play_arrow</i>
-            </a>
-          </template>
-          <template v-else>
-            <a v-on:click="player.play(song.id)" href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
-          </template>
-        </div>
-      </li>
-    </ul>
-    <DragImporter :show="!playlist.length" />
+          </div>
+        </li>
+      </ul>
+    </template>
+    <template v-if="menuIs('artists')">
+      <ul class="artist-list">
+        <li v-for="(artist, index) in this.$store.getters.artists" v-on:dblclick="showSongsOfArtist(artist.name)" :class="{current: isCurrent('artist', artist.name)}">
+          <div class="metas">
+            <span v-if="isCurrent('artist', artist.name)" class="bagde"><PlayingBadge /></span>
+            <span v-else class="index">{{index + 1}}</span>
+            <span class="name">{{artist.name}}</span>
+            <span class="count">歌曲: {{artist.count}}</span>
+          </div>
+        </li>
+      </ul>
+    </template>
+    <template v-if="menuIs('albums')">
+      <ul class="album-list">
+        <li v-for="(album, index) in this.$store.getters.albums" v-on:dblclick="showSongsOfAlbum(album.name)" :class="{current: isCurrent('album', album.name)}">
+          <div class="metas">
+            <span v-if="isCurrent('album', album.name)" class="bagde"><PlayingBadge /></span>
+            <span v-else class="index">{{index + 1}}</span>
+            <span class="name">{{album.name}}</span>
+            <span class="count">歌曲: {{album.count}}</span>
+          </div>
+        </li>
+      </ul>
+    </template>
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 import player from '@/player'
+import PlayingBadge from '@/components/PlayingBadge'
 import DragImporter from '@/components/DragImporter'
 import ProgressCircle from '@/components/ProgressCircle'
 
 export default {
   name: 'play-list',
   methods: {
-    isCurrent (id) {
-      return id === this.status.current
+    menuIs (value) {
+      return this.status.currentMenu.type === value
+    },
+    play (id) {
+      this.$store.dispatch('setCurrentPlaylist', this.status.currentMenu)
+      player.play(id)
+    },
+    isCurrent (type, value) {
+      if (type === 'song') {
+        return value === this.status.currentSongId && this.status.currentMenu.type === this.status.currentPlaylist.type && this.status.currentMenu.value === this.status.currentPlaylist.value
+      } else {
+        return value === this.status.currentPlaylist.value && type === this.status.currentPlaylist.type
+      }
+    },
+    showSongsOfArtist (value) {
+      this.$store.dispatch('setCurrentMenu', { type: 'artist', value })
+    },
+    showSongsOfAlbum (value) {
+      this.$store.dispatch('setCurrentMenu', { type: 'album', value })
     },
     handleRightClick (id) {
       this.rightClickedItemId = id
       this.menu.popup()
+    },
+    toggleFavorite (id, favorite) {
+      this.$store.dispatch('setFavorite', { id, favorite })
     }
   },
   computed: {
+    list () {
+      return this.$store.getters.currentDisplayList
+    },
     player () {
       return player
     },
     progress () {
       return this.$store.getters.progress
     },
-    circleSize () {
-      return this.listType === 'list' ? 'small' : 'medium'
-    },
-    listType () {
-      return 'list' // ['list', 'grid'][this.status.listType] || 'list'
-    },
-    ...mapState(['tempStatus', 'status', 'playlist'])
+    ...mapState(['tempStatus', 'status'])
   },
   components: {
+    PlayingBadge,
     DragImporter,
     ProgressCircle
   },
@@ -71,7 +106,7 @@ export default {
     this.menu.append(new MenuItem({
       label: '播放该曲目',
       click: () => {
-        player.play(this.rightClickedItemId)
+        this.play(this.rightClickedItemId)
       }
     }))
     this.menu.append(new MenuItem({
@@ -97,220 +132,104 @@ export default {
   top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
+  left: 200px;
   overflow: auto;
   background-color: rgba(#000, .15);
   user-select: none;
 }
 
-.play-list{
+.play-list,
+.artist-list,
+.album-list{
   display: block;
   height: 100%;
   margin: 0;
   padding: 0;
   overflow: auto;
-}
 
-.play-list.list{
   li{
+    position: relative;
     display: block;
-    height: 80px;
-    padding: 0 20px;
-    background-clip: padding-box;
-    border-bottom: 1px solid rgba(#fff, .05);
-    transition: background linear .3s;
-    // &:nth-child(odd){
-    //   background-color: rgba(#fff, .05);
-    // }
+    height: 50px;
+    padding: 0;
+    &:nth-child(odd){
+      background-color: rgba(#000, .1);
+    }
     &:hover{
-      background-color: rgba(#fff, .05);
+      background-color: rgba(#000, .15);
     }
-    &.current{
-      background-color: $color_primary;
-      background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
-      .metas{
-        h6{
-          color: #fff;
-        }
-      }
-      .operates{
-        .btn-play{
-          border: none;
-          color: #fff;
-          line-height: 50px;
-        }
-      }
-    }
-    .image{
-      float: left;
-      width: 60px;
-      height: 60px;
-      margin: 10px 0;
-      img{
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 3px;
-      }
+    &.current .metas span{
+      color: $color_primary;
     }
     .metas{
-      float: left;
-      max-width: 300px;
-      margin: 20px 0 0 15px;
+      height: 50px;
       text-transform: capitalize;
       cursor: default;
-      h3, h6{
+      span{
+        height: 50px;
+        display: block;
+        float: left;
         overflow: hidden;
+        color: rgba(#fff, .45);
+        font-size: 12px;
+        line-height: 50px;
         text-overflow: ellipsis;
         text-transform: capitalize;
         white-space: nowrap;
       }
-      h3{
-        height: 20px;
-        overflow: hidden;
-        color: #fff;
-        font-size: 14px;
-        font-weight: normal;
-        line-height: 20px;
+      .bagde{
+        width: 50px;
+        > div{
+          margin: 18px 0 0 16px;
+        }
       }
-      h6{
-        height: 20px;
-        overflow: hidden;
-        color: rgba(#fff, .5);
-        font-size: 12px;
-        font-weight: lighter;
-        line-height: 20px;
+      .index{
+        width: 50px;
+        font-weight: bold;
+        text-align: center;
+      }
+      .name{
+        width: 35%;
+        padding-right: 20px;
+      }
+      .artist,
+      .album{
+        width: 25%;
+        padding-right: 20px;
       }
     }
     .operates{
-      float: right;
-      width: 48px;
-      height: 48px;
-      margin-top: 16px;
-    }
-    .btn-play{
-      position: relative;
-      display: block;
-      width: 48px;
-      height: 48px;
-      border: 1px solid rgba(#fff, .1);
-      border-radius: 50%;
-      color: rgba(#fff, .5);
-      font-size: 20px;
-      line-height: 46px;
-      text-align: center;
-      &:hover{
-        border-color: rgba(#fff, .2);
-        color: rgba(#fff, .8);
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 50px;
+      a{
+        display: block;
+        width: 50px;
+        height: 50px;
+        color: rgba(#fff, .5);
+        font-size: 14px;
+        line-height: 50px;
+        text-align: center;
+        .active{
+          color: #e74c3c;
+        }
       }
     }
   }
 }
 
-.play-list.grid{
-  li{
-    position: relative;
-    float: left;
-    display: block;
-    width: 25%;
-    height: auto;
-    padding-bottom: 25%;
-    &.current{
-      .metas{
-        color: $color_primary;
-        h6{
-          opacity: 1;
-        }
-      }
-      .operates{
-        opacity: 1;
-        .btn-play{
-          border: none;
-          color: rgba($color_primary, .8);
-          line-height: 63px;
-        }
-      }
+.artist-list,
+.album-list{
+  li .metas{
+    .name{
+      width: 70%;
+      font-weight: bold;
     }
-    .image{
-      position: absolute;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      img{
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        // border-radius: 3px;
-      }
+    .count{
+      width: 15%;
+      font-weight: bold;
     }
-    .metas{
-      position: absolute;
-      z-index: 3;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      height: 60px;
-      padding: 20px 10px 10px 10px;
-      overflow: hidden;
-      background-image: linear-gradient(rgba(#000, 0), rgba(#000, 1));
-      color: #fff;
-      text-align: center;
-      text-transform: capitalize;
-      h3, h6{
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-transform: capitalize;
-        white-space: nowrap;
-      }
-      h3{
-        height: 18px;
-        overflow: hidden;
-        opacity: .8;
-        font-size: 14px;
-        font-weight: bold;
-        line-height: 18px;
-      }
-      h6{
-        height: 14px;
-        overflow: hidden;
-        opacity: .4;
-        font-size: 12px;
-        font-weight: lighter;
-        line-height: 14px;
-      }
-    }
-    .operates{
-      position: absolute;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(#000, .7);
-      opacity: 0;
-      &:hover{
-        opacity: 1;
-      }
-      .btn-play{
-        display: block;
-        position: absolute;
-        top: -20px;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 60px;
-        height: 60px;
-        margin: auto;
-        border: 1px solid rgba(#fff, .5);
-        border-radius: 50%;
-        color: rgba(#fff, .8);
-        font-size: 32px;
-        line-height: 58px;
-        text-align: center;
-      }
-    }
-  }  
+  }
 }
 </style>

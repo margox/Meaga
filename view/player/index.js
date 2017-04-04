@@ -2,20 +2,20 @@ export default {
 
   initialize () {
 
-    if (window.player) {
+    if (window.player_core) {
       return false
     }
 
     const { store } = window
-    const player = new Audio()
+    const __player__ = new Audio()
 
-    player.autoBuffer = true
-    player.autoPlay = false
-    window.player = player
+    __player__.autoBuffer = true
+    __player__.autoPlay = false
+    window.player_core = __player__
 
     this.volume(store.state.status.volume)
     this.muted(store.state.status.muted)
-    this.current(store.state.status.current)
+    this.current(store.state.status.currentSongId)
 
     this.setTempStatus({
       ready: true
@@ -27,43 +27,43 @@ export default {
 
   syncStatus () {
 
-    const { player } = window
+    const { player_core } = window
 
-    player.addEventListener('loadedmetadata', () => {
+    player_core.addEventListener('loadedmetadata', () => {
       this.setTempStatus({
-        duration: player.duration
+        duration: player_core.duration
       })
     })
 
-    player.addEventListener('play', () => {
+    player_core.addEventListener('play', () => {
       this.setTempStatus({
         playing: true
       })
     })
 
-    player.addEventListener('pause', () => {
+    player_core.addEventListener('pause', () => {
       this.setTempStatus({
         playing: false
       })
     })
 
-    player.addEventListener('ended', () => {
-      this.setTempStatus({
-        playing: false
-      })
-      this.next(true)
-    })
-
-    player.addEventListener('error', () => {
+    player_core.addEventListener('ended', () => {
       this.setTempStatus({
         playing: false
       })
       this.next(true)
     })
 
-    player.addEventListener('timeupdate', () => {
+    player_core.addEventListener('error', () => {
       this.setTempStatus({
-        played: player.currentTime
+        playing: false
+      })
+      this.next(true)
+    })
+
+    player_core.addEventListener('timeupdate', () => {
+      this.setTempStatus({
+        played: player_core.currentTime
       })
     })
 
@@ -73,20 +73,20 @@ export default {
     window.store.dispatch('setTempStatus', status)
   },
 
-  current (current, play = false) {
+  current (id, play = false) {
 
-    const { player, store } = window
-    const currentSong = store.state.playlist.find((item) => item.id === current)
+    const { player_core, store } = window
+    const currentSong = store.state.songs.find((item) => item.id === id)
 
     if (currentSong) {
-      player.currentTime = 0
+      player_core.currentTime = 0
       setTimeout(() => {
-        player.src = currentSong.src
-        play && player.play()
-        store.dispatch('setCurrent', current)
-      }, 100)
+        player_core.src = currentSong.src
+        play && player_core.play()
+        store.dispatch('setCurrentSongId', id)
+      }, 0)
     } else {
-      return store.state.status.current
+      return store.state.status.currentSongId
     }
 
   },
@@ -94,69 +94,72 @@ export default {
   next (isAuto) {
 
     const { store } = window
-    const { playlist, status } = store.state
-    const { current, loopMode } = status
+    const { status } = store.state
+    const { currentSongId, loopMode } = status
+    const { items } = store.getters.currentPlaylist
 
-    if (status.current === -1 || playlist.length <= 0) {
+    if (currentSongId === -1 || items.length <= 0) {
       return false
     }
 
-    const currentIndex = playlist.findIndex((item) => item.id === current)
+    const currentIndex = items.findIndex((item) => item.id === currentSongId)
 
     let nextIndex = currentIndex
 
     if (loopMode === 1) {
-      nextIndex = currentIndex === playlist.length - 1 ? 0 : currentIndex + 1
+      nextIndex = currentIndex === items.length - 1 ? 0 : currentIndex + 1
     } else if (loopMode === 2) {
-      nextIndex = isAuto ? currentIndex : (currentIndex === playlist.length - 1 ? 0 : currentIndex + 1)
+      nextIndex = isAuto ? currentIndex : (currentIndex === items.length - 1 ? 0 : currentIndex + 1)
     } else {
       nextIndex = this.getRandomIndex()
     }
 
-    this.play(playlist[nextIndex].id)
+    this.play(items[nextIndex].id)
 
   },
 
   prev () {
 
     const { store } = window
-    const { playlist, status } = store.state
-    const { current, loopMode } = status
+    const { status } = store.state
+    const { currentSongId, loopMode } = status
+    const { items } = store.getters.currentPlaylist
 
-    if (status.current === -1 || playlist.length <= 0) {
+    if (currentSongId === -1 || items.length <= 0) {
       return false
     }
 
-    const currentIndex = playlist.findIndex((item) => item.id === current)
+    const currentIndex = items.findIndex((item) => item.id === currentSongId)
 
     let prevIndex = currentIndex
 
     if (loopMode === 1) {
-      prevIndex = currentIndex === 0 ? playlist.length - 1 : currentIndex - 1
+      prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1
     } else if (loopMode === 2) {
-      prevIndex = currentIndex === 0 ? playlist.length - 1 : currentIndex - 1
+      prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1
     } else {
       prevIndex = this.getRandomIndex()
     }
 
-    this.play(playlist[prevIndex].id)
+    this.play(items[prevIndex].id)
 
   },
 
   play (id) {
 
-    const { status, playlist } = window.store.state
+    const { status } = window.store.state
+    const { items } = window.store.getters.currentPlaylist
 
     if (id) {
       this.current(id, true)
-    } else if (status.current !== -1 && playlist.length > 0) {
-      window.player.play()
+    } else if (status.currentSongId !== -1 && items.length > 0) {
+      window.player_core.play()
     }
 
   },
 
   pause () {
-    window.player.pause()
+    window.player_core.pause()
   },
 
   toggle () {
@@ -170,17 +173,18 @@ export default {
 
     this.pause()
     this.pauseVisualizer()
-    store.dispatch('setCurrent', -1)
+    store.dispatch('setCurrentSongId', -1)
 
   },
 
   remove (id) {
 
     const { store } = window
-    const { status, playlist } = store.state
+    const { status } = store.state
+    const { items } = window.store.getters.currentPlaylist
 
-    if (id === status.current) {
-      playlist.length < 2 ? this.stop() : this.next(true)
+    if (id === status.currentSongId) {
+      items.length < 2 ? this.stop() : this.next(true)
     } else {
       store.dispatch('removeSong', id)
     }
@@ -194,28 +198,28 @@ export default {
 
   volume (volume = -1) {
 
-    const { player, store } = window
+    const { player_core, store } = window
 
     if (volume >= 0) {
       volume = Math.min(1, volume)
       store.dispatch('setVolume', volume)
-      player.volume = volume
+      player_core.volume = volume
     }
 
-    return player.volume
+    return player_core.volume
 
   },
 
   muted (muted) {
 
-    const { player, store } = window
+    const { player_core, store } = window
 
     if (muted !== undefined) {
-      player.muted = !!muted
+      player_core.muted = !!muted
       store.dispatch('setMuted', muted)
     }
 
-    return player.muted
+    return player_core.muted
 
   },
 
@@ -250,18 +254,18 @@ export default {
 
   progress (progress = -1) {
 
-    const { player } = window
+    const { player_core } = window
 
     if (progress >= 0) {
-      player.currentTime = player.duration * Math.min(1, progress)
+      player_core.currentTime = player_core.duration * Math.min(1, progress)
     }
 
-    return player.currentTime / player.duration
+    return player_core.currentTime / player_core.duration
 
   },
 
   getRandomIndex () {
-    return Math.floor(Math.random() * window.store.state.playlist.length)
+    return Math.floor(Math.random() * window.store.getters.currentPlaylist.items.length)
   }
 
 }

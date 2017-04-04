@@ -31,10 +31,10 @@ module.exports = {
     return process
   },
 
-  readAudioTags (path) {
+  readAudioTags (filePath) {
 
     return new Promise((resolve, reject) => {
-      new jsmediatags.Reader(path)
+      new jsmediatags.Reader(filePath)
       .setTagsToRead(['title', 'artist', 'album', 'picture'])
       .read({
         onSuccess: (tag) => {
@@ -45,7 +45,9 @@ module.exports = {
           })
         },
         onError: (error) => {
-          reject(error)
+          reject({
+            title: path.basename(filePath)
+          }, error)
         }
       })
     })

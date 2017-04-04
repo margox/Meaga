@@ -9,7 +9,7 @@ import visualizer from '@/helpers/visualizer'
 export default {
   name: 'visualizer',
   mounted () {
-    visualizer.initialize(window.player, this.$refs.canvas)
+    visualizer.initialize(window.player_core, this.$refs.canvas)
   },
   computed: {
     hide () {

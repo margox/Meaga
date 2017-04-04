@@ -63,7 +63,7 @@ export default {
   right: 0;
   left: 0;
   font-size: 16px;
-  font-weight: lighter;
+  font-weight: bold;
   line-height: 32px;
   text-align: center;
   text-transform: uppercase;
@@ -82,7 +82,7 @@ export default {
   border-radius: 3px;
   color: rgba(#fff, 1);
   font-size: 14px;
-  font-weight: lighter;
+  font-weight: bold;
   line-height: 50px;
   text-align: center;
   text-transform: uppercase;

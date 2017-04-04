@@ -1,14 +1,13 @@
 <template>
   <div class="header">
-    <div class="top-bar">
+    <div class="topbar">
       <TrafficLights />
+      <span class="caption">Meaga</span>
       <ListControls />
-      <SearchForm />
     </div>
   </div>
 </template>
 <script>
-import SearchForm from '@/components/SearchForm'
 import ListControls from '@/components/ListControls'
 import TrafficLights from '@/components/TrafficLights'
 
@@ -20,7 +19,6 @@ export default {
     }
   },
   components: {
-    SearchForm,
     ListControls,
     TrafficLights
   }
@@ -32,15 +30,23 @@ export default {
 .header{
   position: relative;
   z-index: 2;
-  height: 50px;
+  height: 60px;
   overflow: hidden;
-  background-color: rgba(#000, .45);
-  border-bottom: 1px solid rgba(#000, .05);
-  box-shadow: 0 2px 4px rgba(#000, .1);
+  background-color: rgba(#000, .4);
+  box-shadow: inset 0 -.5px 0 rgba(#000, .8);
+  user-select: none;
 }
-.top-bar{
-  height: 50px;
+.topbar{
+  height: 60px;
   text-align: center;
   -webkit-app-region: drag;
+}
+.caption{
+  color: rgba(#fff, .8);
+  font-size: 12px;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  line-height: 60px;
+  text-transform: uppercase;
 }
 </style>

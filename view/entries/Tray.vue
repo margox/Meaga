@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     isCurrent (id) {
-      return id === this.state.status.current
+      return id === this.state.status.currentSongId
     },
     play (id) {
       ipcRenderer.send(communication.trayChannel, {

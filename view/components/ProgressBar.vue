@@ -1,6 +1,9 @@
 <template>
   <div v-on:click="setProgress" class="progress-bar">
-    <div class="progress-played" :style="{width: progress + '%'}"></div>
+    <div class="total">
+      <div class="played" :style="{width: progress + '%'}"></div>
+    </div>
+    <button class="handle" :style="{left: progress + '%'}"></button>
   </div>
 </template>
 <script>
@@ -26,20 +29,32 @@ export default{
 
 .progress-bar{
   position: absolute;
-  top: -8px;
-  right: 0;
-  left: 0;
-  height: 8px;
-  border-top: solid 7px transparent;
-  &:hover{
-    background-color: rgba(#000, .3);
-    border-top-width: 0;
-  }
+  z-index: 2;
+  top: 37px;
+  right: 175px;
+  left: 170px;
+  height: 6px;
 }
-.progress-played{
+.total{
+  height: 6px;
+  overflow: hidden;
+  background-color: rgba(#fff, .05);
+  border-radius: 3px;
+}
+.played{
   width: 0%;
-  height: 100%;
-  background-image: linear-gradient(to right, $color_primary_light, $color_primary);
-  background-size: 100vw 8px;
+  height: 6px;
+  background-color: $color_primary;
+}
+.handle{
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background-color: #d8d8d8;
+  border: none;
+  border-radius: 50%;
+  transform: translateX(-50%);
 }
 </style>

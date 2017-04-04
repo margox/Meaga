@@ -20,6 +20,7 @@
 *{
   box-sizing: border-box;
 }
+
 ul,ol,li{
   list-style: none;
 }
@@ -32,18 +33,24 @@ h1,h2,h3,h4,h5,h6{
   margin: 0;
   padding: 0;
 }
-a{
+a, button{
   text-decoration: none;
+  cursor: pointer;
 }
 
 html,body{
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Open Source Han', Helvetica, Arial, sans-serif;
+  font-family: 'PingFang SC', 'Source Han Sans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
 html{
   overflow: hidden;
+}
+
+body{
+  background-color: rgba(#333, .8);
+  cursor: default;
 }

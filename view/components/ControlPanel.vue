@@ -6,6 +6,11 @@
       <a v-else v-on:click="play()" href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
       <a  v-on:click="next()" href="javascript:void(0);" class="button btn-next"><i class="icon">skip_next</i></a>
     </div>
+    <ProgressBar />
+    <a v-on:click="toggleFavorite()" href="javascript:void(0);" class="small-button btn-toggle-favorite">
+      <i v-if="currentSong.favorite" class="icon active">favorite</i>
+      <i v-else class="icon">favorite_border</i>
+    </a>
     <div v-on:mousewheel="scrollVolume" class="volume-controls">
       <a v-on:click="toggleMute()" href="javascript:void(0);" class="small-button btn-mute"><i class="icon">{{volumeIcon}}</i></a>
       <div class="volume-bar-wrap">
@@ -21,6 +26,7 @@
 <script>
 import { mapState } from 'vuex'
 import player from '@/player'
+import ProgressBar from '@/components/ProgressBar'
 
 export default {
   name: 'control-panel',
@@ -40,6 +46,12 @@ export default {
     setLoopMode () {
       let { loopMode } = this.status
       player.loopMode(loopMode < 3 ? loopMode + 1 : 1)
+    },
+    toggleFavorite () {
+      this.$store.dispatch('setFavorite', {
+        id: this.currentSong.id,
+        favorite: !this.currentSong.favorite
+      })
     },
     toggleVisualizer () {
       this.$store.state.status.visualize ? player.pauseVisualizer() : player.danceVisualizer()
@@ -79,7 +91,13 @@ export default {
     loopMode () {
       return ['repeat', 'repeat_one', 'shuffle'][this.status.loopMode - 1]
     },
+    currentSong () {
+      return this.$store.getters.currentSong
+    },
     ...mapState(['tempStatus', 'status', 'playlist'])
+  },
+  components: {
+    ProgressBar
   }
 }
 </script>
@@ -91,8 +109,7 @@ export default {
   z-index: 1;
   top: 0;
   right: 0;
-  left: 0;
-  width: 100%;
+  left: 220px;
   height: 80px;
 }
 
@@ -101,42 +118,27 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  width: 160px;
-  height: 50px;
-  margin: 15px auto;
+  width: 166px;
+  height: 80px;
 }
 .button{
   float: left;
   display: block;
+  width: 42px;
+  height: 42px;
+  margin: 19px 10px 0 0;
   padding: 0;
   border: none;
   border-radius: 50%;
   background-color: rgba(#fff, .1);
   color: rgba(#fff, .5);
-  font-size: 24px;
+  font-size: 20px;
+  line-height: 42px;
   text-align: center;
   transition: .3s;
   &:hover{
     background-color: rgba(#fff, .2);
     color: #fff;
-  }
-}
-.btn-next,
-.btn-prev{
-  width: 40px;
-  height: 40px;
-  margin: 5px 0;
-  line-height: 40px;
-}
-.btn-play{
-  width: 50px;
-  height: 50px;
-  margin: 0 15px;
-  background-image: linear-gradient(to bottom right, $color_primary_light, $color_primary);
-  color: #fff;
-  line-height: 50px;
-  &:hover{
-    background-image: linear-gradient(to bottom, $color_primary_light, $color_primary);
   }
 }
 
@@ -148,9 +150,6 @@ export default {
   font-size: 20px;
   line-height: 30px;
   text-align: center;
-  &:hover{
-    background-color: rgba(#fff, .1);
-  }
 }
 
 .volume-controls{
@@ -162,7 +161,7 @@ export default {
   margin-top: 25px;
   &:hover{
     .btn-mute{
-      background-color: rgba(#fff, .1);
+      background-color: rgba(#000, 1);
     }
     .volume-bar-wrap{
       opacity: 1;
@@ -179,7 +178,7 @@ export default {
   height: 104px;
   margin: 0;
   overflow: hidden;
-  border: solid 12px rgba(#fff, .1);
+  border: solid 12px rgba(#000, 1);
   opacity: 0;
   pointer-events: none;
   transition: .3s;
@@ -199,12 +198,19 @@ export default {
   background-color: rgba(#fff, .5);
 }
 .btn-set-mode,
+.btn-toggle-favorite,
 .btn-toggle-visualizer{
   position: absolute;
   top: 25px;
 }
 .btn-set-mode{
   right: 55px;
+}
+.btn-toggle-favorite{
+  right: 125px;
+  .active{
+    color: #e74c3c;
+  }
 }
 .btn-toggle-visualizer{
   right: 90px;

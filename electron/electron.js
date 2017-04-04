@@ -68,7 +68,7 @@ app.on('ready', () => {
   })
 
 	// 只在OSX平台显示托盘窗口
-	if (process.platform === 'darwin') {
+	if (process.platform === '_darwin') {
 
 		// 初始化托盘图标和托盘窗口
 		trayButton = new Tray(config.trayIcon) 

@@ -1,7 +1,7 @@
 <template>
   <div class="list-controls">
-    <!-- <a href="javascript:void(0);" v-on:click="setListType(0)" :class="[listType ? '' : 'active']" class="button btn-switch-list-type view-list"><i class="icon">view_stream</i></a> -->
-    <!-- <a href="javascript:void(0);" v-on:click="setListType(1)" :class="[listType ? 'active' : '']" class="button btn-switch-list-type view-grid"><i class="icon">view_module</i></a> -->
+    <!-- <a href="javascript:void(0);" v-on:click="setListType(0)" :class="[listType ? '' : 'active']" class="button btn-switch-list-type view-list"><i class="icon">view_stream</i></a>
+    <a href="javascript:void(0);" v-on:click="setListType(1)" :class="[listType ? 'active' : '']" class="button btn-switch-list-type view-grid"><i class="icon">view_module</i></a> -->
     <a href="javascript:void(0);" v-on:click="importMusic" class="button btn-import-music"><i class="icon">add</i></a>
   </div>
 </template>
@@ -40,7 +40,7 @@ export default {
   float: left;
   border: none;
   height: 30px;
-  margin-top: 10px;
+  margin-top: 15px;
   font-size: 24px;
   line-height: 30px;
   text-decoration: none;
@@ -58,15 +58,12 @@ export default {
 
 .btn-import-music{
   width: 30px;
-  margin: 10px 0 0 10px;
+  margin: 15px 0 0 20px;
   padding: 0;
-  background-color: rgba(#fff, .1);
-  border-radius: 50%;
   color: rgba(#fff, .5);
   font-size: 24px;
   &:hover{
     color: #fff;
-    background-color: $color_primary;
   }
 }
 </style>
