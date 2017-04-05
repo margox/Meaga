@@ -160,9 +160,6 @@ export default {
   height: 30px;
   margin-top: 25px;
   &:hover{
-    .btn-mute{
-      background-color: rgba(#000, 1);
-    }
     .volume-bar-wrap{
       opacity: 1;
       pointer-events: auto;
@@ -170,15 +167,22 @@ export default {
     }
   }
 }
+.btn-mute{
+  position: relative;
+  z-index: 2;
+}
 .volume-bar-wrap{
   position: absolute;
-  top: -104px;
+  z-index: 0;
+  top: -100px;
   left: 0;
   width: 30px;
-  height: 104px;
+  height: 134px;
   margin: 0;
   overflow: hidden;
-  border: solid 12px rgba(#000, 1);
+  background-color: rgba(#000, .4);
+  border-radius: 3px 3px 0 0;
+  box-shadow: inset 0 0 0 .5px rgba(#000, .6);
   opacity: 0;
   pointer-events: none;
   transition: .3s;
@@ -186,16 +190,19 @@ export default {
 }
 .volume-bar{
   position: relative;
-  width: 30px;
+  width: 6px;
   height: 80px;
-  background-color: rgba(#000, .1);
+  margin: 12px;
+  background-color: rgba(#fff, .1);
+  border-radius: 3px;
 }
 .current-volume{
   position: absolute;
   bottom: 0;
   left: 0;
   width: 6px;
-  background-color: rgba(#fff, .5);
+  background-color: $color_primary;
+  border-radius: 3px;
 }
 .btn-set-mode,
 .btn-toggle-favorite,

@@ -1,10 +1,16 @@
 <template>
   <div class="sidebar">
+    <TrafficLights />
     <h5 class="caption">Musics</h5>
     <a v-on:click="showPlaylist(1)" :class="{current: isCurrent('playlist', 1)}" class="item" href="javascript:void(0);">
       <i class="icon">headset</i>
       <span>All Songs</span>
       <div v-if="isPlaying('playlist', 1)" class="badge"><PlayingBadge /></div>
+    </a>
+    <a v-on:click="showPlaylist(3)" :class="{current: isCurrent('playlist', 3)}" class="item" href="javascript:void(0);">
+      <i class="icon">favorite</i>
+      <span>Favorites</span>
+      <div v-if="isPlaying('playlist', 3)" class="badge"><PlayingBadge /></div>
     </a>
     <a v-on:click="showArtists()" :class="{current: isCurrent('artists') || isCurrent('artist')}" class="item" href="javascript:void(0);">
       <i class="icon">face</i>
@@ -16,22 +22,18 @@
       <span>Albums</span>
       <div v-if="isPlaying('album')" class="badge"><PlayingBadge /></div>
     </a>
-    <h5 class="caption">Playlists</h5>
+    <!-- <h5 class="caption">Playlists</h5>
     <a v-on:click="showPlaylist(2)" :class="{current: isCurrent('playlist', 2)}" class="item" href="javascript:void(0);">
       <i class="icon">menu</i>
       <span>Default</span>
       <div v-if="isPlaying('playlist', 2)" class="badge"><PlayingBadge /></div>
-    </a>
-    <a v-on:click="showPlaylist(3)" :class="{current: isCurrent('playlist', 3)}" class="item" href="javascript:void(0);">
-      <i class="icon">favorite</i>
-      <span>Favorites</span>
-      <div v-if="isPlaying('playlist', 3)" class="badge"><PlayingBadge /></div>
-    </a>
+    </a> -->
   </div>
 </template>
 <script>
 import { mapState } from 'vuex'
 import PlayingBadge from '@/components/PlayingBadge'
+import TrafficLights from '@/components/TrafficLights'
 
 export default {
   name: 'sidebar',
@@ -79,7 +81,8 @@ export default {
     }
   },
   components: {
-    PlayingBadge
+    PlayingBadge,
+    TrafficLights
   }
 }
 </script>
@@ -92,10 +95,9 @@ export default {
   bottom: 0;
   left: 0;
   width: 200px;
-  padding: 0;
+  padding: 60px 0 0 0;
   overflow: hidden;
-  background-color: rgba(#000, .15);
-  box-shadow: inset -.5px 0 0 rgba(#000, .8);
+  box-shadow: inset -.5px 0 0 rgba(#000, .4);
 }
 .caption{
   margin: 25px 0 15px 0;

@@ -1,23 +1,23 @@
 <template>
   <div class="tray-player">
-    <template v-if="state.playlist">
+    <template v-if="list">
       <div class="controls">
         <div class="play-controls">
           <a v-on:click="prev()" href="javascript:void(0);" class="button btn-prev"><i class="icon">skip_previous</i></a>
-          <a v-if="state.tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play"><i class="icon">pause</i></a>
+          <a v-if="tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play"><i class="icon">pause</i></a>
           <a v-else v-on:click="play()" href="javascript:void(0);" class="button btn-play"><i class="icon">play_arrow</i></a>
           <a v-on:click="next()" href="javascript:void(0);" class="button btn-next"><i class="icon">skip_next</i></a>
         </div>
       </div>
       <ul class="playlist">
-        <li v-for="(song, index) in state.playlist" v-on:dblclick="play(song.id)" :class="{current: isCurrent(song.id)}">
+        <li v-for="(song, index) in list.items" v-on:dblclick="play(song.id)" :class="{current: isCurrent(song.id)}">
           <div class="metas">
             <h3>{{song.name}}</h3>
             <h6>{{song.metas.artist}} / {{song.metas.album}}</h6>
           </div>
           <div class="operates">
             <template v-if="isCurrent(song.id)">
-              <a v-if="state.tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play">
+              <a v-if="tempStatus.playing" v-on:click="pause()" href="javascript:void(0);" class="button btn-play">
                 <ProgressCircle size="tiny" :progress="progress"/>
                 <i class="icon">pause</i>
               </a>
@@ -44,12 +44,17 @@ export default {
   name: 'tray-player',
   data () {
     return {
-      state: {}
+      status: null,
+      tempStatus: null,
+      currentPlaylist: null
     }
   },
   computed: {
     progress () {
-      return this.state.tempStatus.played / this.state.tempStatus.duration
+      return this.tempStatus.played / this.tempStatus.duration
+    },
+    list () {
+      return this.currentPlaylist || false
     }
   },
   components: {
@@ -57,7 +62,7 @@ export default {
   },
   methods: {
     isCurrent (id) {
-      return id === this.state.status.currentSongId
+      return this.status ? id === this.status.currentSongId : false
     },
     play (id) {
       ipcRenderer.send(communication.trayChannel, {
@@ -82,8 +87,10 @@ export default {
     }
   },
   created () {
-    ipcRenderer.on(communication.trayChannel, (event, payload) => {
-      this.state = payload
+    ipcRenderer.on(communication.trayChannel, (event, { status, tempStatus, currentPlaylist }) => {
+      this.status = status
+      this.tempStatus = tempStatus
+      this.currentPlaylist = currentPlaylist
     })
   }
 }

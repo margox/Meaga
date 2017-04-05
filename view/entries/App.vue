@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <PlayerHead />
     <PlayerBody />
     <PlayerFoot />
     <Visualizer />
@@ -12,7 +11,6 @@ import appMenu from '@/helpers/appMenu'
 import connecter from '@/helpers/connecter'
 import dataStorage from '@/helpers/dataStorage'
 import fileImporter from '@/helpers/fileImporter'
-import PlayerHead from '@/components/Header'
 import PlayerBody from '@/components/Content'
 import PlayerFoot from '@/components/Footer'
 import Visualizer from '@/components/Visualizer'
@@ -20,7 +18,6 @@ import Visualizer from '@/components/Visualizer'
 export default {
   name: 'app',
   components: {
-    PlayerHead,
     PlayerBody,
     PlayerFoot,
     Visualizer
@@ -30,13 +27,13 @@ export default {
     this.$store.dispatch('sync', dataStorage.getAppData())
     this.$store.subscribe((mutation, state) => {
       dataStorage.saveAppData(state)
-      window.platform === '_darwin' && connecter.syncAppState(state)
+      // window.platform === 'darwin' && connecter.syncAppState(state.status, state.tempStatus, this.$store.getters.currentPlaylist)
     })
 
     player.initialize()
     fileImporter.initialize()
 
-    if (window.platform === '_darwin') {
+    if (window.platform === 'darwin') {
       appMenu.initialize()
       connecter.initialize()
     }

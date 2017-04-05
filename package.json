@@ -10,9 +10,18 @@
     "dev": "NODE_ENV=development electron ./electron/",
     "prod": "NODE_ENV=development electron ./dist/",
     "package": "npm run build && electron-packager ./dist --electron-version=1.6.2 --out=./packaged --overwrite --icon=./electron/static/images/app_icon.png",
+    "dist": "build",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
+  },
+  "build": {
+    "appId": "app.meaga",
+    "directories": {
+      "buildResources": "./build_assets",
+      "app": "dist",
+      "output": "packaged"
+    }
   },
   "dependencies": {
     "vudio.js": "^1.0.3",
@@ -35,6 +44,9 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^3.1.4",
     "css-loader": "^0.26.1",
+    "electron": "^1.6.2",
+    "electron-builder": "^16.6.1",
+    "electron-packager": "^8.6.0",
     "eslint": "^3.14.1",
     "eslint-config-standard": "^6.2.1",
     "eslint-friendly-formatter": "^2.0.7",

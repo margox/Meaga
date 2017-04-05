@@ -127,11 +127,13 @@ const useStore = (Vue) => {
         } else if (type === 'artists') {
           return {
             items: getters.artists,
+            name: 'Artists',
             type: 'artists'
           }
         } else if (type === 'albums') {
           return {
             items: getters.albums,
+            name: 'Albums',
             type: 'albums'
           }
         } else if (type === 'artist') {
@@ -183,7 +185,6 @@ const useStore = (Vue) => {
     mutations: {
       sync (state, data) {
         state.status = data.status
-        state.filters = data.filters
         state.songs = data.songs
         state.playlists = data.playlists
       },
@@ -202,7 +203,7 @@ const useStore = (Vue) => {
       setCurrentMenu (state, currentMenu) {
         state.status = { ...state.status, currentMenu }
       },
-      setFilters (state, filters) {
+      applyFilter (state, filters) {
         state.filters = { ...state.filters, ...filters }
       },
       addSong (state, { song, playlistId }) {
@@ -263,8 +264,8 @@ const useStore = (Vue) => {
       setCurrentMenu ({ commit }, data) {
         commit('setCurrentMenu', data)
       },
-      setFilters ({ commit }, filters) {
-        commit('setFilters', filters)
+      applyFilter ({ commit }, filters) {
+        commit('applyFilter', filters)
       },
       addSong ({ commit }, payload) {
         commit('addSong', payload)

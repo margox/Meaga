@@ -35,7 +35,6 @@ h1,h2,h3,h4,h5,h6{
 }
 a, button{
   text-decoration: none;
-  cursor: pointer;
 }
 
 html,body{
@@ -44,6 +43,7 @@ html,body{
   height: 100%;
   font-family: 'PingFang SC', 'Source Han Sans', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -webkit-app-region: drag;
 }
 
 html{
@@ -51,6 +51,7 @@ html{
 }
 
 body{
-  background-color: rgba(#333, .8);
   cursor: default;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 .5px rgba(#000, .4);
 }

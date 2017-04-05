@@ -14,7 +14,6 @@ window.store = store
 window.electron = electron
 window.remoteConfig = remoteConfig
 window.remoteFunctions = remoteFunctions
-window.process = remoteFunctions.getProcess()
 window.platform = window.process.platform
 
 // TODO

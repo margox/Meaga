@@ -17,6 +17,7 @@ export default {
     if (arguments.length === 1) {
       let appData = { ...arguments[0] }
       delete appData.tempStatus
+      delete appData.filters
       localStorage.setItem(localDataKey, JSON.stringify(appData))
     } else {
       let localData = this.getAppData()

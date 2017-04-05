@@ -1,5 +1,5 @@
 <template>
-  <div class="playing-badge">
+  <div class="playing-badge" :class="{paused: !playing}">
     <div class="bar1"></div>
     <div class="bar2"></div>
     <div class="bar3"></div>
@@ -7,7 +7,12 @@
 </template>
 <script>
 export default {
-  name: 'playing-badge'
+  name: 'playing-badge',
+  computed: {
+    playing () {
+      return this.$store.state.tempStatus.playing
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
@@ -26,7 +31,14 @@ export default {
   height: 14px;
   margin: 0 2px;
   background-color: $color_primary;
-  animation: move linear 1s infinite;
+  animation: move 1s infinite;
+}
+.paused{
+  .bar1,
+  .bar2,
+  .bar3{
+    animation-play-state: paused;
+  }
 }
 .bar1{
   animation-delay: 0;

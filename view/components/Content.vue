@@ -20,9 +20,9 @@ export default {
 .content{
   position: absolute;
   z-index: 1;
-  top: 60px;
+  top: 0;
   right: 0;
-  bottom: 80px;
+  bottom: 79px;
   left: 0;
   padding: 30px 80px;
 }

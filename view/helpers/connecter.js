@@ -33,8 +33,8 @@ export default {
 
   },
 
-  syncAppState (state) {
-    window.electron.ipcRenderer.send(window.remoteConfig.communication.mainChannel, state)
+  syncAppState (status, tempStatus, currentPlaylist) {
+    window.electron.ipcRenderer.send(window.remoteConfig.communication.mainChannel, { status, tempStatus, currentPlaylist })
   }
 
 }

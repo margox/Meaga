@@ -6,7 +6,7 @@
     <div class="drag-tip">
       <span>
         <i class="empty-icon icon">inbox</i><br/>
-        Nothing in your playlist<br/>
+        Nothing in this playlist<br/>
         Drag mp3 files into this window to import them
       </span>
       <a v-on:click="importMusic()" class="btn-import" href="javascript:void(0);">click to import</a>
@@ -44,14 +44,13 @@ export default {
 
 .drag-importer{
   position: absolute;
-  top: 20px;
+  top: 60px;
   right: 20px;
   bottom: 20px;
   left: 20px;
-  visibility: hidden;
-  opacity: 0;
   color: rgba(#fff, .3);
   user-select: none;
+  border: dashed 2px rgba(#fff, .1);
   &.active{
     visibility: visible;
     opacity: 1;
@@ -78,17 +77,16 @@ export default {
   width: 180px;
   height: 50px;
   margin: 30px auto 0 auto;
-  background-color: $color_primary;
   border-radius: 3px;
-  color: rgba(#fff, 1);
+  box-shadow: inset 0 0 0 .5px rgba(#fff, .4);
+  color: rgba(#fff, .6);
   font-size: 14px;
   font-weight: bold;
   line-height: 50px;
   text-align: center;
   text-transform: uppercase;
-  transition: .3s;
   &:hover{
-    background-color: $color_primary - 30;
+    background-color: rgba(#fff, .05);
   }
 }
 </style>

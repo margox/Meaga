@@ -47,6 +47,18 @@ export default {
     padding: 0;
     border: none;
     border-radius: 50%;
+    &::before{
+      display: none;
+      width: 6px;
+      height: 6px;
+      margin: 3px;
+      background-color: rgba(#000, .6);
+      border-radius: 3px;
+      content: '';
+    }
+    &:hover::before{
+      display: block;
+    }
   }
   .btn-close{
     background-color: #f0213b;

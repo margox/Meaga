@@ -27,10 +27,6 @@ if (!fs.existsSync(artistDir)) {
 
 module.exports = {
 
-  getProcess () {
-    return process
-  },
-
   readAudioTags (filePath) {
 
     return new Promise((resolve, reject) => {
@@ -38,8 +34,9 @@ module.exports = {
       .setTagsToRead(['title', 'artist', 'album', 'picture'])
       .read({
         onSuccess: (tag) => {
-          this.cacheAlbumCover(tag.tags.album, tag.tags.picture, (cover, error) => {
-            let tags = tag.tags
+          let { tags } = tag
+          tags.album = tags.album.replace(/\#|\?|\&\/\\/g, '')
+          this.cacheAlbumCover(tags.album, tag.tags.picture, (cover, error) => {
             tags.cover = error ? null : cover
             resolve(tags)
           })

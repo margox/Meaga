@@ -1,8 +1,9 @@
 <template>
   <div class="play-list-wrap">
+    <ListControls />
     <template v-if="menuIs('playlist') || menuIs('artist') || menuIs('album')">
-      <ul v-if="list.items.length" class="play-list">
-        <li v-for="(song, index) in list.items" v-on:contextmenu="handleRightClick(song.id)" v-on:dblclick="play(song.id)" :class="{current: isCurrent('song', song.id)}">
+      <ul v-if="list.length" class="play-list">
+        <li v-for="(song, index) in list" v-on:contextmenu="handleRightClick(song.id)" v-on:dblclick="play(song.id)" :class="{current: isCurrent('song', song.id)}">
           <div class="metas">
             <span v-if="isCurrent('song', song.id)" class="bagde"><PlayingBadge /></span>
             <span v-else class="index">{{index + 1}}</span>
@@ -18,10 +19,13 @@
           </div>
         </li>
       </ul>
+      <template v-if="menuIs('playlist') && !list.length && !this.filters.keyword">
+        <DragImporter />
+      </template>
     </template>
     <template v-if="menuIs('artists')">
       <ul class="artist-list">
-        <li v-for="(artist, index) in this.$store.getters.artists" v-on:dblclick="showSongsOfArtist(artist.name)" :class="{current: isCurrent('artist', artist.name)}">
+        <li v-for="(artist, index) in artists" v-on:dblclick="showSongsOfArtist(artist.name)" :class="{current: isCurrent('artist', artist.name)}">
           <div class="metas">
             <span v-if="isCurrent('artist', artist.name)" class="bagde"><PlayingBadge /></span>
             <span v-else class="index">{{index + 1}}</span>
@@ -33,7 +37,7 @@
     </template>
     <template v-if="menuIs('albums')">
       <ul class="album-list">
-        <li v-for="(album, index) in this.$store.getters.albums" v-on:dblclick="showSongsOfAlbum(album.name)" :class="{current: isCurrent('album', album.name)}">
+        <li v-for="(album, index) in albums" v-on:dblclick="showSongsOfAlbum(album.name)" :class="{current: isCurrent('album', album.name)}">
           <div class="metas">
             <span v-if="isCurrent('album', album.name)" class="bagde"><PlayingBadge /></span>
             <span v-else class="index">{{index + 1}}</span>
@@ -50,6 +54,7 @@ import { mapState } from 'vuex'
 import player from '@/player'
 import PlayingBadge from '@/components/PlayingBadge'
 import DragImporter from '@/components/DragImporter'
+import ListControls from '@/components/ListControls'
 import ProgressCircle from '@/components/ProgressCircle'
 
 export default {
@@ -85,7 +90,23 @@ export default {
   },
   computed: {
     list () {
-      return this.$store.getters.currentDisplayList
+      let { keyword } = this.filters
+      let { currentDisplayList } = this.$store.getters
+      return keyword ? currentDisplayList.items.filter(item => {
+        return item.name.toLowerCase().indexOf(keyword) > -1 ||
+          item.metas.artist.toLowerCase().indexOf(keyword) > -1 ||
+          item.metas.album.toLowerCase().indexOf(keyword) > -1
+      }) : currentDisplayList.items
+    },
+    artists () {
+      let { keyword } = this.filters
+      let { artists } = this.$store.getters
+      return keyword ? artists.filter(item => item.name.toLowerCase().indexOf(keyword) > -1) : artists
+    },
+    albums () {
+      let { keyword } = this.filters
+      let { albums } = this.$store.getters
+      return keyword ? albums.filter(item => item.name.toLowerCase().indexOf(keyword) > -1) : albums
     },
     player () {
       return player
@@ -93,32 +114,33 @@ export default {
     progress () {
       return this.$store.getters.progress
     },
-    ...mapState(['tempStatus', 'status'])
+    ...mapState(['tempStatus', 'status', 'filters'])
   },
   components: {
     PlayingBadge,
     DragImporter,
+    ListControls,
     ProgressCircle
   },
   mounted () {
     const { Menu, MenuItem } = window.electron.remote
     this.menu = new Menu()
     this.menu.append(new MenuItem({
-      label: '播放该曲目',
+      label: 'PLay',
       click: () => {
         this.play(this.rightClickedItemId)
       }
     }))
     this.menu.append(new MenuItem({
-      label: '删除该曲目',
+      label: 'Remove',
       click: () => {
         player.remove(this.rightClickedItemId)
       }
     }))
     this.menu.append(new MenuItem({
-      label: '清空播放列表',
+      label: 'Clear Songs',
       click: () => {
-        confirm('确认清空播放列表吗？这个操作不可撤销') && player.clear()
+        confirm('Sure to remove all of the songs?') && player.clear()
       }
     }))
   }
@@ -133,8 +155,8 @@ export default {
   right: 0;
   bottom: 0;
   left: 200px;
+  padding-top: 60px;
   overflow: auto;
-  background-color: rgba(#000, .15);
   user-select: none;
 }
 
@@ -144,19 +166,19 @@ export default {
   display: block;
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 0 0 10px 0;
   overflow: auto;
+  box-shadow: inset 0 .5px 0 rgba(#000, .2);
 
   li{
     position: relative;
     display: block;
     height: 50px;
     padding: 0;
-    &:nth-child(odd){
-      background-color: rgba(#000, .1);
-    }
-    &:hover{
-      background-color: rgba(#000, .15);
+    box-shadow: inset 0 -.5px 0 rgba(#000, .2);
+    &:hover,
+    &.current{
+      background-color: rgba(#000, .05);
     }
     &.current .metas span{
       color: $color_primary;

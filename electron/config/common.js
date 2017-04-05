@@ -10,13 +10,15 @@ let mainWindow = {
   y: mainWindowState.y,
   minWidth: 800,
   minHeight: 600,
-  fullscreenable: false,
+  fullscreenable: true,
   frame: false,
-  vibrancy: 'dark',
+  vibrancy: 'dark', 
+  hasShadow: false,
   icon: path.resolve(__dirname, '../static/images/app_icon.icns'),
   resizable: true,
   webPreferences: {
     webSecurity: false,
+    experimentalFeatures: true,
     defaultEncoding: 'UTF-8'
   }
 }
@@ -38,7 +40,6 @@ let trayWindow = {
   fullscreenable: false,
   show: false,
   webPreferences: {
-    // devTools: false,
     webSecurity: false
   }
 }
