@@ -60,14 +60,14 @@ export default{
 .progress-bar{
   position: absolute;
   z-index: 2;
-  top: 0;
+  top: 20px;
   right: 175px;
   left: 170px;
-  height: 80px;
+  height: 40px;
 }
 .total{
   height: 6px;
-  margin-top: 37px;
+  margin-top: 17px;
   overflow: hidden;
   background-color: rgba(#fff, .05);
   border-radius: 3px;
@@ -79,7 +79,7 @@ export default{
 }
 .handle{
   position: absolute;
-  top: 34px;
+  top: 14px;
   left: 0;
   width: 12px;
   height: 12px;

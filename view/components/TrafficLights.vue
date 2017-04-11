@@ -37,8 +37,11 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  width: 200px;
   height: 60px;
   padding-left: 20px;
+  background-color: rgba(#000, .1);
+  box-shadow: inset 0 -.5px 0 rgba(#000, .2);
   button{
     float: left;
     width: 12px;

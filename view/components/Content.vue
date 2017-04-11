@@ -19,7 +19,7 @@ export default {
 <style lang="scss">
 .content{
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   right: 0;
   bottom: 79px;

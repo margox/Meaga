@@ -37,6 +37,7 @@ export default {
   height: 80px;
   padding-right: 20px;
   overflow: hidden;
+  box-shadow: inset -.5px 0 0 rgba(#000, .4);
 }
 .cover{
   position: relative;

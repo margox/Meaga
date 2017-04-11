@@ -168,7 +168,6 @@ export default {
   margin: 0;
   padding: 0 0 10px 0;
   overflow: auto;
-  box-shadow: inset 0 .5px 0 rgba(#000, .2);
 
   li{
     position: relative;

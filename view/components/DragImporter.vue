@@ -44,7 +44,7 @@ export default {
 
 .drag-importer{
   position: absolute;
-  top: 60px;
+  top: 80px;
   right: 20px;
   bottom: 20px;
   left: 20px;

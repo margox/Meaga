@@ -45,7 +45,14 @@ export default {
 @import '~scssbase';
 
 #app {
-  height: 100%;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  overflow: hidden;
+  background-color: $color_background;
+  box-shadow: inset 0 0 0 .5px rgba(#000, .4);
   opacity: 0;
   transition: transform .4s, opacity .4s;
   transform: translateY(10px);

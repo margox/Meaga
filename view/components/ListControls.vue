@@ -38,10 +38,12 @@ export default {
 
 .list-controls{
   position: absolute;
-  height: 50px;
+  height: 60px;
   top: 0;
   right: 0;
   left: 0;
+  background-color: rgba(#000, .1);
+  box-shadow: inset 0 -.5px 0 rgba(#000, .2);
 }
 
 .caption{
