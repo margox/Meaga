@@ -5,8 +5,8 @@
 ## 应用截图
 ![](http://ww1.sinaimg.cn/large/006tNc79gy1feu3mwro36j31kw0zk4qp.jpg)
 
-## 下载Mac平台安装文件
-https://pan.baidu.com/s/1i50vnYt
+## 下载Mac平台安装文件(V1.0.1)
+https://pan.baidu.com/s/1o8QAz94
 
 ## 开发和打包说明
 

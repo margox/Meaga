@@ -1,6 +1,6 @@
 {
   "name": "vue-music-player",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Small Music Player Powered by Vue and Electron.",
   "author": "Margox <margox@foxmail.com>",
   "private": true,
