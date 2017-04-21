@@ -10,7 +10,7 @@
     "dev": "NODE_ENV=development electron ./electron/",
     "prod": "NODE_ENV=development electron ./dist/",
     "package": "npm run build && electron-packager ./dist --electron-version=1.6.2 --out=./packaged --overwrite --icon=./electron/static/images/app_icon.png",
-    "dist": "build",
+    "dist": "npm run build && build",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run unit",
     "lint": "eslint --ext .js,.vue src test/unit/specs"

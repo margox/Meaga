@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <a v-on:click="toggleVisualizer()" href="javascript:void(0);" :class="{off: !$store.state.status.visualize}" class="small-button btn-toggle-visualizer"><i class="icon">equalizer</i></a>
+    <!-- <a v-on:click="toggleVisualizer()" href="javascript:void(0);" :class="{off: !$store.state.status.visualize}" class="small-button btn-toggle-visualizer"><i class="icon">equalizer</i></a> -->
     <a v-on:click="setLoopMode()" href="javascript:void(0);" class="small-button btn-set-mode"><i class="icon">{{loopMode}}</i></a>
   </div>
 </template>
@@ -214,7 +214,7 @@ export default {
   right: 55px;
 }
 .btn-toggle-favorite{
-  right: 125px;
+  right: 90px;
   .active{
     color: #e74c3c;
   }

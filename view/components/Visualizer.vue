@@ -5,12 +5,12 @@
   </div>
 </template>
 <script>
-import visualizer from '@/helpers/visualizer'
+// import visualizer from '@/helpers/visualizer'
 
 export default {
   name: 'visualizer',
   mounted () {
-    visualizer.initialize(window.player_core, this.$refs.canvas)
+    // visualizer.initialize(window.player_core, this.$refs.canvas)
   },
   computed: {
     hide () {
@@ -23,6 +23,7 @@ export default {
 @import '~scssinc';
 
 .visualizer{
+  display: none;
   position: absolute;
   bottom: 1px;
   left: 50%;

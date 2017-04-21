@@ -40,8 +40,8 @@ export default {
   width: 200px;
   height: 60px;
   padding-left: 20px;
-  background-color: rgba(#000, .1);
-  box-shadow: inset 0 -.5px 0 rgba(#000, .2);
+  background-color: rgba(#000, .2);
+  box-shadow: inset 0 -.5px 0 rgba(#000, .2), 0 1px 3px rgba(#000, .1);
   button{
     float: left;
     width: 12px;

@@ -3,7 +3,7 @@
 > 一个由Electron和Vue联合打造的本地音乐播放器
 
 ## 应用截图
-![](https://raw.githubusercontent.com/margox/margox.github.io/master/meaga/assets/screenshot.png)
+![](http://ww1.sinaimg.cn/large/006tNc79gy1feu3mwro36j31kw0zk4qp.jpg)
 
 ## 下载Mac平台安装文件
 https://pan.baidu.com/s/1i50vnYt

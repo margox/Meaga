@@ -45,13 +45,11 @@ export default {
 @import '~scssbase';
 
 #app {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  bottom: 2px;
-  left: 2px;
+  position: relative;
+  height: 100%;
   overflow: hidden;
   background-color: $color_background;
+  background-image: linear-gradient(to bottom left, rgba(#000, 0), rgba(#000, .25));
   box-shadow: inset 0 0 0 .5px rgba(#000, .4);
   opacity: 0;
   transition: transform .4s, opacity .4s;

@@ -61,7 +61,7 @@ export default{
   position: absolute;
   z-index: 2;
   top: 20px;
-  right: 175px;
+  right: 135px;
   left: 170px;
   height: 40px;
 }

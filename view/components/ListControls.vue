@@ -1,6 +1,6 @@
 <template>
   <div class="list-controls">
-    <h5 class="caption">{{playlist.name}}<small>{{playlist.items.length}} items</small></h5>
+    <!-- <h5 class="caption">{{playlist.name}}<small>{{playlist.items.length}} items</small></h5> -->
     <a href="javascript:void(0);" v-on:click="importMusic" class="button btn-import-music"><i class="icon">add</i></a>
     <div class="filter">
       <i class="icon">search</i>
@@ -14,12 +14,12 @@ import fileImporter from '@/helpers/fileImporter'
 export default {
   name: 'list-controls',
   computed: {
-    playlist () {
-      return this.$store.getters.currentDisplayList
-    },
-    listType () {
-      return this.$store.state.status.listType
-    }
+    // playlist () {
+    //   return this.$store.getters.currentDisplayList
+    // },
+    // listType () {
+    //   return this.$store.state.status.listType
+    // }
   },
   methods: {
     applyFilter (e) {
@@ -42,8 +42,8 @@ export default {
   top: 0;
   right: 0;
   left: 0;
-  background-color: rgba(#000, .1);
-  box-shadow: inset 0 -.5px 0 rgba(#000, .2);
+  background-color: rgba(#000, .2);
+  box-shadow: inset 0 -.5px 0 rgba(#000, .2), 0 1px 3px rgba(#000, .1);
 }
 
 .caption{
