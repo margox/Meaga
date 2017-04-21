@@ -3,7 +3,7 @@
 > 一个由Electron和Vue联合打造的本地音乐播放器
 
 ## 应用截图
-![](http://ww3.sinaimg.cn/large/006tNc79gy1feujt4evlfj31kw0zk4qp.jpg)
+![](http://ww2.sinaimg.cn/large/006tNc79gy1feuk16ug09j31kw0zk7wk.jpg)
 
 ## 下载Mac平台安装文件(V1.0.2)
 http://cdn.margox.cn/Meaga-1.0.2.dmg
