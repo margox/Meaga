@@ -13,8 +13,8 @@ let mainWindow = {
   fullscreenable: true,
   frame: false,
   // vibrancy: 'dark', 
-  transparent: true,
-  hasShadow: false,
+  // transparent: true,
+  // hasShadow: false,
   icon: path.resolve(__dirname, '../static/images/app_icon.icns'),
   resizable: true,
   webPreferences: {

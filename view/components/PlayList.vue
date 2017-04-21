@@ -174,10 +174,15 @@ export default {
     display: block;
     height: 50px;
     padding: 0;
-    box-shadow: inset 0 -.5px 0 rgba(#000, .2);
-    &:hover,
-    &.current{
+    // box-shadow: inset 0 -.5px 0 rgba(#000, .2);
+    &:nth-child(even){
       background-color: rgba(#000, .05);
+    }
+    &:hover{
+      background-color: rgba(#fff, .03);
+    }
+    &.current{
+      background-color: rgba(#fff, .05);
     }
     &.current .metas span{
       color: $color_primary;

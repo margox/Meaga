@@ -107,7 +107,7 @@ export default {
   font-weight: normal;
   text-transform: uppercase;
   & + .item{
-    box-shadow: inset 0 .5px 0 rgba(#000, .2), inset 0 -.5px 0 rgba(#000, .2);
+    // box-shadow: inset 0 .5px 0 rgba(#000, .2), inset 0 -.5px 0 rgba(#000, .2);
   }
 }
 .item{
@@ -116,12 +116,12 @@ export default {
   padding: 0 20px;
   color: rgba(#fff, .45);
   line-height: 40px;
-  box-shadow: inset 0 -.5px 0 rgba(#000, .2);
+  // box-shadow: inset 0 -.5px 0 rgba(#000, .2);
   &:hover{
     background-color: rgba(#000, .05);
   }
   &.current{
-    background-color: rgba(#000, .05);
+    // background-color: rgba(#000, .1);
     color: $color_primary;
   }
   i{

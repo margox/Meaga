@@ -3,10 +3,10 @@
 > 一个由Electron和Vue联合打造的本地音乐播放器
 
 ## 应用截图
-![](http://ww1.sinaimg.cn/large/006tNc79gy1feu3mwro36j31kw0zk4qp.jpg)
+![](http://ww3.sinaimg.cn/large/006tNc79gy1feujt4evlfj31kw0zk4qp.jpg)
 
-## 下载Mac平台安装文件(V1.0.1)
-https://pan.baidu.com/s/1o8QAz94
+## 下载Mac平台安装文件(V1.0.2)
+http://cdn.margox.cn/Meaga-1.0.2.dmg
 
 ## 开发和打包说明
 
