@@ -26,7 +26,7 @@ export default {
 
     this.$store.dispatch('sync', dataStorage.getAppData())
     this.$store.subscribe((mutation, state) => {
-      dataStorage.saveAppData(state)
+      dataStorage.setAppData(state)
       // window.platform === 'darwin' && connecter.syncAppState(state.status, state.tempStatus, this.$store.getters.currentPlaylist)
     })
 

@@ -12,7 +12,7 @@ export default {
 
   },
 
-  saveAppData (name, value) {
+  setAppData (name, value) {
 
     if (arguments.length === 1) {
       let appData = { ...arguments[0] }

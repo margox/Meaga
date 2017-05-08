@@ -126,7 +126,7 @@ export default {
     const { Menu, MenuItem } = window.electron.remote
     this.menu = new Menu()
     this.menu.append(new MenuItem({
-      label: 'PLay',
+      label: 'Play',
       click: () => {
         this.play(this.rightClickedItemId)
       }
